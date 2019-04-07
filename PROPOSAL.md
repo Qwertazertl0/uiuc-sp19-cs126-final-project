@@ -19,7 +19,7 @@ Time-permitting, and in no particular order, as many of the following will be im
 * Create a story/game scenario for the dot (E.g. "You are a dot...")
 
 ## Libraries and Resources
-So far, I plan to use the following:
-* [__OpenGL__](https://openframeworks.cc/documentation/gl/): openFrameworks graphics library
+So far, the following seem to be useful:
+* [__gl, glm__](https://openframeworks.cc/documentation/gl/): openFrameworks wrapper for OpenGL
 * [__SoLoud__](http://sol.gfxile.net/soloud/index.html): Game audio engine for "fire-and-forget" sounds
 * [__ofxBox2D__](https://github.com/vanderlin/ofxBox2d/tree/stable): oF addon library for rigid bodies
