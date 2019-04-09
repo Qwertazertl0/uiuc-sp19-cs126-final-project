@@ -3,7 +3,7 @@
 This log maintains a list of current and achieved objectives throughout the development of the project "DOT".
 
 ## Current Objectives
- * Create over screen state machine and implement all outermost attributes (windows initialization, etc.)
+ * Create screen-to-screen states and transitions and implement all outermost attributes (windows initialization, etc.)
  * Create basic "room/level" and implement basic 2D collision physics for player
  
 ## Already Implemented
