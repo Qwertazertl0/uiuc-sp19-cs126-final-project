@@ -80,6 +80,11 @@ xcuserdata
 *.ilk
 *.aps
 ipch/
+*.sln
+*.vcxproj
+addons.make
+icon.rc
+*.vcxproj.filters
 
 # Eclipse
 .metadata
