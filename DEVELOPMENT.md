@@ -10,6 +10,9 @@ This log maintains a list of current and achieved objectives throughout the deve
  * No implementation yet
 
 ## Weekly Logs
+
+### April 14th - April 20th:
+
 ### April 7th - April 13th:
 
  * __Working with ofxBox2D__
@@ -24,3 +27,10 @@ This log maintains a list of current and achieved objectives throughout the deve
  * __Exploring OpenGL__
     * Found a YouTube channel (TheChernoProject) with a series dedicated to OpenGL
     * Tested basic functions in personal test application, should not be difficult to use, given that it is part of the oF core.
+
+ * __Box2D library__
+    * Will be using the Box2D library rather than the addon. It is well-documented and seems very powerful.
+    
+ * __Other__
+    * Decided to model application as a finite state machine to move from screen to screen.
+    * Separated out audio into its own engine class, will work on it after game physics implemented
