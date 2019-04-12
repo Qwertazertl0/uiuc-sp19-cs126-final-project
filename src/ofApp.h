@@ -1,12 +1,16 @@
 #pragma once
 
+#include "Box2D/Box2D.h"
+
 #include "ofMain.h"
+#include "audioEngine.h"
+#include "appState.h"
 
-class ofApp : public ofBaseApp{
-
+class ofApp : public ofBaseApp {
 	public:
 		void setup();
 		void exit();
+
 		void update();
 		void draw();
 
@@ -20,6 +24,8 @@ class ofApp : public ofBaseApp{
 		void mouseExited(int x, int y);
 		void windowResized(int w, int h);
 		void dragEvent(ofDragInfo dragInfo);
-		void gotMessage(ofMessage msg);
-		
+		void gotMessage(ofMessage msg);	
+
+		AudioEngine* audioEng;
+    AppState* gameState;
 };

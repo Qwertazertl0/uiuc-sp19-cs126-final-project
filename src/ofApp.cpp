@@ -1,43 +1,32 @@
 #include <iostream>
 
 #include "ofApp.h"
-#include "soloud.h"
-#include "soloud_wav.h"
-
-SoLoud::Soloud* gSoloud;
-SoLoud::Wav* gWav;
 
 //--------------------------------------------------------------
 void ofApp::setup() {
 	ofSetEscapeQuitsApp(false);
-	gSoloud = new SoLoud::Soloud;
-	gWav = new SoLoud::Wav;
-
-	std::cout << gSoloud->init() << std::endl;
-	std::cout << gWav->load("data/test_bach.wav") << std::endl;
+  gameState = new StartMenuState();
+	audioEng = new AudioEngine();
 }
 
 void ofApp::exit() {
-	std::cout << "Exiting..." << std::endl;
-	gSoloud->deinit();
-	delete gWav;
+  delete gameState;
+	delete audioEng;
 }
 
 //--------------------------------------------------------------
 void ofApp::update() {
-
+  gameState->update();
 }
 
 //--------------------------------------------------------------
 void ofApp::draw() {
-	ofDrawRectangle(0, 0, 50, 50);
+	gameState->draw();
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key) {
-	int handle = gSoloud->play(*gWav);
-	std::cout << handle << std::endl;
-	std::cout << gSoloud->getActiveVoiceCount() << std::endl;
+	
 }
 
 //--------------------------------------------------------------
