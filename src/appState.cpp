@@ -5,6 +5,7 @@
 #include "glm/vec2.hpp"
 #include <string>
 
+//TODO: create constants / replace magic #s
 std::string startMenuBgPath = "graphics/start_menu_background3.jpg";
 std::string playGameBgPath = "graphics/dark3.jpg";
 

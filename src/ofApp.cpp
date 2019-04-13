@@ -4,7 +4,7 @@
 
 //--------------------------------------------------------------
 void ofApp::setup() {
-	ofSetEscapeQuitsApp(false);
+	//ofSetEscapeQuitsApp(false); TODO: uncomment for final application
   gameState = new StartMenuState();
 	audioEng = new AudioEngine();
 }
