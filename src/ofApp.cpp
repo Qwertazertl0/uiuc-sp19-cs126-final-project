@@ -17,6 +17,11 @@ void ofApp::exit() {
 //--------------------------------------------------------------
 void ofApp::update() {
   gameState->update();
+  if (gameState->nextState != gameState) {
+    AppState* temp = gameState->nextState;
+    delete gameState;
+    gameState = temp;
+  }
 }
 
 //--------------------------------------------------------------
@@ -26,12 +31,12 @@ void ofApp::draw() {
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key) {
-	
+  gameState->keyPressed(key, gameState);
 }
 
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key) {
-
+  gameState->keyReleased(key);
 }
 
 //--------------------------------------------------------------

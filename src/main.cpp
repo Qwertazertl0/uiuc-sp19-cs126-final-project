@@ -3,10 +3,9 @@
 
 //========================================================================
 int main( ){
-	ofSetupOpenGL(1024,768,OF_WINDOW);			// <-------- setup the GL context
+	ofSetupOpenGL(1440, 960, OF_WINDOW);
+  ofSetWindowTitle("DOT: A Visual Experience");
+  ofSetWindowPosition(OF_ALIGN_HORZ_CENTER, OF_ALIGN_VERT_CENTER);
 
-	// this kicks off the running of my app
-	// can be OF_WINDOW or OF_FULLSCREEN
-	// pass in width and height too:
-	ofRunApp(new ofApp());
+  ofRunApp(new ofApp());
 }
