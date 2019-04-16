@@ -5,6 +5,7 @@
 
 #include <string>
 
+//Graphics image paths
 std::string startMenuBgPath = "graphics/start_menu_background4.jpg";
 std::string logoPath = "graphics/dotLogo.png";
 
@@ -45,7 +46,7 @@ StartMenuState::StartMenuState() {
 }
 
 void StartMenuState::update() {
-  
+  //TODO: Keep for particle system later
 }
 
 void StartMenuState::draw() {
@@ -62,14 +63,6 @@ void StartMenuState::draw() {
   ofSetCircleResolution(100);
   ofDrawCircle(glm::vec2(375, 170), 31);
   ofSetColor(ofColor::white);
-}
-
-void StartMenuState::keyPressed(int key, AppState* currState) {
-  currState->setNextState(new PlayGameState());
-}
-
-void StartMenuState::keyReleased(int key) {
-
 }
 
 StartMenuState::~StartMenuState() {

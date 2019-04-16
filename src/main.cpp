@@ -3,9 +3,13 @@
 
 //========================================================================
 int main( ){
-	ofSetupOpenGL(1440, 960, OF_WINDOW);
-  ofSetWindowTitle("DOT: A Visual Experience");
-  ofSetWindowPosition(OF_ALIGN_HORZ_CENTER, OF_ALIGN_VERT_CENTER);
+  ofGLFWWindowSettings settings;
+  settings.windowMode = OF_WINDOW;
+  settings.setSize(1440, 960);
+  settings.resizable = false;
+  ofCreateWindow(settings);
 
+  ofSetWindowPosition(OF_ALIGN_HORZ_CENTER, OF_ALIGN_VERT_CENTER);
+  ofSetWindowTitle("DOT: A Visual Experience");
   ofRunApp(new ofApp());
 }

@@ -3,8 +3,7 @@
 #include "graphics/ofImage.h"
 #include "ofApp.h"
 
-//Assuming window size of 1440x960
-//TODO: change to floats for relative positioning
+//Positioning of buttons in pixels
 const int menuButtonWidth = 433;
 const int menuButtonHeight = 96;
 const int startYCoord = 450;
@@ -18,12 +17,10 @@ class StartMenuState : public AppState {
     ofImage* background;
     ofImage* logo;
   public:
-    StartMenuState();
+    StartMenuState(); //Load and instantiate all graphics and Clickables
     ~StartMenuState();
     void update();
     void draw();
-    void keyPressed(int key, AppState* currState);
-    void keyReleased(int key);
 
     Clickable* startButton;
     Clickable* optionsButton;

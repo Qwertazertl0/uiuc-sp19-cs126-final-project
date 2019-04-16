@@ -5,7 +5,7 @@
 
 //--------------------------------------------------------------
 void ofApp::setup() {
-	//ofSetEscapeQuitsApp(false); TODO: uncomment for final application
+	ofSetEscapeQuitsApp(false);
   gameState = new StartMenuState();
 	audioEng = new AudioEngine();
 }
@@ -52,7 +52,7 @@ void ofApp::mouseDragged(int x, int y, int button) {
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button) {
-
+  
 }
 
 //--------------------------------------------------------------
