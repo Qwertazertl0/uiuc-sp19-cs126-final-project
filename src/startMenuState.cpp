@@ -5,18 +5,43 @@
 
 #include <string>
 
-std::string startMenuBgPath = "graphics/start_menu_background3.jpg";
-std::string testNeutral = "graphics/test.jpg";
-std::string testHover = "graphics/test2.jpg";
+std::string startMenuBgPath = "graphics/start_menu_background4.jpg";
+std::string logoPath = "graphics/dotLogo.png";
+
+std::string startNeutralPath = "graphics/startNeutral.png";
+std::string startHoverPath = "graphics/startHover.png";
+std::string optionsNeutralPath = "graphics/optionsNeutral.png";
+std::string optionsHoverPath = "graphics/optionsHover.png";
+std::string aboutNeutralPath = "graphics/aboutNeutral.png";
+std::string aboutHoverPath = "graphics/aboutHover.png";
+std::string quitNeutralPath = "graphics/quitNeutral.png";
+std::string quitHoverPath = "graphics/quitHover.png";
 
 StartMenuState::StartMenuState() {
   background = new ofImage();
   background->load(startMenuBgPath);
+  logo = new ofImage();
+  logo->load(logoPath);
 
-  ofImage* testN = new ofImage(testNeutral);
-  ofImage* testH = new ofImage(testHover);
-  ofRectangle* testLoc = new ofRectangle(0, 0, 100, 100);
-  testButton = new Clickable(testN, testH, testLoc);
+  ofImage* neutralPath = new ofImage(startNeutralPath);
+  ofImage* hoverPath = new ofImage(startHoverPath);
+  ofRectangle* loc = new ofRectangle(0, startYCoord, menuButtonWidth, menuButtonHeight);
+  startButton = new Clickable(neutralPath, hoverPath, loc);
+
+  neutralPath = new ofImage(optionsNeutralPath);
+  hoverPath = new ofImage(optionsHoverPath);
+  loc = new ofRectangle(0, optionsYCoord, menuButtonWidth, menuButtonHeight);
+  optionsButton = new Clickable(neutralPath, hoverPath, loc);
+
+  neutralPath = new ofImage(aboutNeutralPath);
+  hoverPath = new ofImage(aboutHoverPath);
+  loc = new ofRectangle(0, aboutYCoord, menuButtonWidth, menuButtonHeight);
+  aboutButton = new Clickable(neutralPath, hoverPath, loc);
+
+  neutralPath = new ofImage(quitNeutralPath);
+  hoverPath = new ofImage(quitHoverPath);
+  loc = new ofRectangle(0, quitYCoord, menuButtonWidth, menuButtonHeight);
+  quitButton = new Clickable(neutralPath, hoverPath, loc);
 }
 
 void StartMenuState::update() {
@@ -26,7 +51,17 @@ void StartMenuState::update() {
 void StartMenuState::draw() {
   if (background->isAllocated())
     background->draw(0, 0, ofGetWindowWidth(), ofGetWindowHeight());
-  testButton->draw();
+  if (logo->isAllocated())
+    logo->draw(logoCornerOffset, logoCornerOffset);
+  startButton->draw();
+  optionsButton->draw();
+  aboutButton->draw();
+  quitButton->draw();
+
+  ofSetColor(ofColor::blanchedAlmond);
+  ofSetCircleResolution(100);
+  ofDrawCircle(glm::vec2(375, 170), 31);
+  ofSetColor(ofColor::white);
 }
 
 void StartMenuState::keyPressed(int key, AppState* currState) {
@@ -39,4 +74,8 @@ void StartMenuState::keyReleased(int key) {
 
 StartMenuState::~StartMenuState() {
   delete background;
+  delete startButton;
+  delete optionsButton;
+  delete aboutButton;
+  delete quitButton;
 }

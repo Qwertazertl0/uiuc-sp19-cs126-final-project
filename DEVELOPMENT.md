@@ -2,12 +2,21 @@
 
 This log maintains a list of current and achieved objectives throughout the development of the project "DOT".
 
+Minimum Viable Product:
+ * A smooth little platformer with music, graphically pleasing, and with one demo scroller level.
+
 ## Current Objectives
- * Create screen-to-screen states and transitions and implement all outermost attributes (windows initialization, etc.)
- * Create basic "room/level" and implement basic 2D collision physics for player
- 
+ * Start Menu:
+ ** Add particles flowing across the screen
+ ** Link Buttons to functionality
+
+ * Game:
+ ** Continue fine tuning physics and feel
+ ** Create a basic demo level
+
 ## Already Implemented
  * Basic dot graphics established
+ * Start menu mostly fleshed out
 
 ## Weekly Logs
 
@@ -17,7 +26,7 @@ This log maintains a list of current and achieved objectives throughout the deve
 
  * __Start Menu__
 	* Created clickable class to model buttons and act as transitions
-	* Should have some artwork/font by end of week
+	* Added title screen and menus buttons (required several hours of tedious Photoshop and pixel measurements)
 
 ### April 7th - April 13th:
 

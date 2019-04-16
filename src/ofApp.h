@@ -22,6 +22,7 @@ class Clickable {
 public:
   Clickable(ofImage* neutral, ofImage* hover, ofRectangle* pos) :
             neutralImage(neutral), hoverImage(hover), position(pos) {}
+  ~Clickable();
   void draw();
   bool inside(glm::vec2 mousePos);
 
