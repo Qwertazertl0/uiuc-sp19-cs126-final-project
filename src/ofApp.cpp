@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "ofApp.h"
+#include "startMenuState.h"
 
 //--------------------------------------------------------------
 void ofApp::setup() {

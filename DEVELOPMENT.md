@@ -7,11 +7,17 @@ This log maintains a list of current and achieved objectives throughout the deve
  * Create basic "room/level" and implement basic 2D collision physics for player
  
 ## Already Implemented
- * No implementation yet
+ * Basic dot graphics established
 
 ## Weekly Logs
 
 ### April 14th - April 20th:
+ * __Dot aesthetics__
+	* Did a fair amount of research on fbos. The dot trail was getting glitchy and slow so the better solution was to keep track of previous positions.
+
+ * __Start Menu__
+	* Created clickable class to model buttons and act as transitions
+	* Should have some artwork/font by end of week
 
 ### April 7th - April 13th:
 

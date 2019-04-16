@@ -1,5 +1,6 @@
 #include "playGameState.h"
 #include "ofMain.h"
+#include "Box2D\Box2D.h"
 
 PlayGameState::PlayGameState() {
   background = new ofImage();

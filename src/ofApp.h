@@ -4,7 +4,31 @@
 
 #include "ofMain.h"
 #include "audioEngine.h"
-#include "appState.h"
+
+class AppState {
+public:
+  virtual void update() {}
+  virtual void draw() {}
+  virtual void keyPressed(int key, AppState* currState) {}
+  virtual void keyReleased(int key) {}
+  void setNextState(AppState* state) {
+    nextState = state;
+  }
+
+  AppState* nextState = this;
+};
+
+class Clickable {
+public:
+  Clickable(ofImage* neutral, ofImage* hover, ofRectangle* pos) :
+            neutralImage(neutral), hoverImage(hover), position(pos) {}
+  void draw();
+  bool inside(glm::vec2 mousePos);
+
+  ofImage* neutralImage;
+  ofImage* hoverImage;
+  ofRectangle* position;
+};
 
 class ofApp : public ofBaseApp {
 	public:

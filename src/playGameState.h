@@ -1,6 +1,6 @@
 #pragma once
 
-#include "appState.h"
+#include "ofApp.h"
 #include <vector>
 
 const float timeStep = 1.0f / 60.0f;
@@ -13,7 +13,7 @@ const float dotDensity = 0.3f;
 const float dotFriction = 0.0f;
 const float dotHorVelDampFactor = 0.96f;
 
-const int fadeAmnt = 40;
+const int numFadeCircles = 20;
 const float fadeStepLen = 0.1f;
 const float dotDrawRadius = 40.0f;
 const float meterToGraphicsScaleFactor = 40.0f;
