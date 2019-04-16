@@ -26,23 +26,3 @@ class StartMenuState : public AppState {
     void keyPressed(int key, AppState* currState);
     void keyReleased(int key);
 };
-
-class PlayGameState : public AppState {
-    ofImage* background;
-    ofFbo* fadeBuffer;
-    
-    BOX2D_H::b2World* world;
-    BOX2D_H::b2Body* dotBody;
-    BOX2D_H::b2Body* groundBody;
-    BOX2D_H::b2BodyDef bodyDef;
-  public:
-    PlayGameState();
-    ~PlayGameState();
-    void initBox2DWorld();
-    void update();
-    void draw();
-    void keyPressed(int key, AppState* currState);
-    void keyReleased(int key);
-
-    bool wKeyPressed = false;
-};
