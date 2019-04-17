@@ -7,16 +7,17 @@ Minimum Viable Product:
 
 ## Current Objectives
  * Start Menu:
- ** Add particles flowing across the screen
- ** Link Buttons to functionality
+	* Add particles flowing across the screen
+	* Link Buttons to functionality (about, options)
 
  * Game:
- ** Continue fine tuning physics and feel
- ** Create a basic demo level
+	* Continue fine tuning physics and feel
+	* Create a basic demo level
+	* Add a return to menu clickable
 
 ## Already Implemented
- * Basic dot graphics established
- * Start menu mostly fleshed out
+ * Basic dot graphics and movement established
+ * Start menu visuals mostly fleshed out
 
 ## Weekly Logs
 
@@ -27,6 +28,10 @@ Minimum Viable Product:
  * __Start Menu__
 	* Created clickable class to model buttons and act as transitions
 	* Added title screen and menus buttons (required several hours of tedious Photoshop and pixel measurements)
+	* Linked start and quit buttons to respective functionalities (about and options still need to be done)
+
+ * __Icon__
+	* Added an icon for the application (and a resource.h file). This required(?) that I change the target subsystem from console to windows. I do not know if this will cause later issues.
 
 ### April 7th - April 13th:
 

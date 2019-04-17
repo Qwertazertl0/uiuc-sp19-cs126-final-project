@@ -34,9 +34,13 @@ public:
   PlayGameState();
   ~PlayGameState();
   void initBox2DWorld();
+
   void update();
   void draw();
   void drawDot(b2Vec2 pos, float radius);
+
   void keyPressed(int key, AppState* currState);
   void keyReleased(int key);
+  std::vector<Clickable*> getClickables();
+  void clickOn(Clickable* button);
 };

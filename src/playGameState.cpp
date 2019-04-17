@@ -102,6 +102,14 @@ void PlayGameState::keyReleased(int key) {
   }
 }
 
+std::vector<Clickable*> PlayGameState::getClickables() {
+  return std::vector<Clickable*>(); //TODO: add return to menu clickable
+}
+
+void PlayGameState::clickOn(Clickable* button) {
+  //TODO: add return to menu clickable
+}
+
 PlayGameState::~PlayGameState() {
   delete world;
   dotBody = NULL;

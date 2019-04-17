@@ -5,20 +5,6 @@
 #include "ofMain.h"
 #include "audioEngine.h"
 
-//Abstract class representing each "screen" (e.g. start menu, settings, about)
-class AppState {
-  public:
-    virtual void update() {}
-    virtual void draw() {}
-    virtual void keyPressed(int key, AppState* currState) {}
-    virtual void keyReleased(int key) {}
-    void setNextState(AppState* state) {
-      nextState = state;
-    }
-
-    AppState* nextState = this;
-};
-
 //Wrapper class linking graphic images to simple ofRectangle to create clickable buttons
 class Clickable {
   public:
@@ -33,6 +19,22 @@ class Clickable {
     ofRectangle* position;
 };
 
+//Abstract class representing each "screen" (e.g. start menu, settings, about)
+class AppState {
+  public:
+    virtual void update() {}
+    virtual void draw() {}
+    virtual void keyPressed(int key, AppState* currState) {} //TODO: passing in currState is weird, find better workaround
+    virtual void keyReleased(int key) {}
+    virtual std::vector<Clickable*> getClickables() {return std::vector<Clickable*>();};
+    virtual void clickOn(Clickable* button) {}
+    void setNextState(AppState* state) {
+      nextState = state;
+    }
+
+    AppState* nextState = this;
+};
+
 //Main application class run from main.cpp
 class ofApp : public ofBaseApp {
 	public:
@@ -44,16 +46,13 @@ class ofApp : public ofBaseApp {
 
 		void keyPressed(int key);
 		void keyReleased(int key);
-		void mouseMoved(int x, int y );
-		void mouseDragged(int x, int y, int button);
 		void mousePressed(int x, int y, int button);
 		void mouseReleased(int x, int y, int button);
-		void mouseEntered(int x, int y);
-		void mouseExited(int x, int y);
-		void windowResized(int w, int h);
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);	
 
 		AudioEngine* audioEng;
     AppState* gameState;
+    int mousePressInitPosX;
+    int mousePressInitPosY;
 };

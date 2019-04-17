@@ -21,6 +21,8 @@ class StartMenuState : public AppState {
     ~StartMenuState();
     void update();
     void draw();
+    std::vector<Clickable*> getClickables();
+    void clickOn(Clickable* button);
 
     Clickable* startButton;
     Clickable* optionsButton;

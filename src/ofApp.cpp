@@ -41,38 +41,21 @@ void ofApp::keyReleased(int key) {
 }
 
 //--------------------------------------------------------------
-void ofApp::mouseMoved(int x, int y) {
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseDragged(int x, int y, int button) {
-
-}
-
-//--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button) {
-  
+  mousePressInitPosX = x;
+  mousePressInitPosY = y;
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button) {
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseEntered(int x, int y) {
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseExited(int x, int y) {
-
-}
-
-//--------------------------------------------------------------
-void ofApp::windowResized(int w, int h) {
-
+  for (Clickable* button : gameState->getClickables()) {
+    if (button->inside(glm::vec2(mousePressInitPosX, mousePressInitPosY))) {
+      if (button->inside(glm::vec2(x, y))) {
+        gameState->clickOn(button);
+        return;
+      }
+    }
+  }
 }
 
 //--------------------------------------------------------------

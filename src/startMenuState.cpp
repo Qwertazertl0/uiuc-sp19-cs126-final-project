@@ -65,6 +65,22 @@ void StartMenuState::draw() {
   ofSetColor(ofColor::white);
 }
 
+std::vector<Clickable*> StartMenuState::getClickables() {
+  return std::vector<Clickable*>({startButton, optionsButton, aboutButton, quitButton});
+}
+
+void StartMenuState::clickOn(Clickable* button) {
+  if (button == startButton) {
+    nextState = new PlayGameState();
+  } else if (button == optionsButton) {
+    std::cout << "options" << std::endl; //TODO: options screen
+  } else if (button == aboutButton) {
+    std::cout << "about" << std::endl; //TODO: about screen
+  } else if (button == quitButton) {
+    ofExit(0);
+  }
+}
+
 StartMenuState::~StartMenuState() {
   delete background;
   delete startButton;
