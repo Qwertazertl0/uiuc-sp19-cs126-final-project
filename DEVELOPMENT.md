@@ -33,6 +33,9 @@ Minimum Viable Product:
  * __Icon__
 	* Added an icon for the application (and a resource.h file). This required(?) that I change the target subsystem from console to windows. I do not know if this will cause later issues.
 
+ * __Audio__
+	* Setup basic audio engine with a background music loop
+
 ### April 7th - April 13th:
 
  * __Working with ofxBox2D__

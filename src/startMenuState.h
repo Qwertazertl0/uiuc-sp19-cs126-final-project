@@ -29,6 +29,9 @@ class StartMenuState : public AppState {
     Clickable* quitButton;
 
     DrawGroup drawItems = MENU;
+
+    bool mouseOnButton;
+    bool isMouseOnButton();
   public:
     StartMenuState(); //Load and instantiate all graphics and Clickables
     ~StartMenuState();

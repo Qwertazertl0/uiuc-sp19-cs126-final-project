@@ -3,6 +3,8 @@
 #include "ofApp.h"
 #include "startMenuState.h"
 
+AudioEngine* ofApp::audioEng;
+
 //--------------------------------------------------------------
 void ofApp::setup() {
 	ofSetEscapeQuitsApp(false);
@@ -35,18 +37,15 @@ void ofApp::keyPressed(int key) {
   gameState->keyPressed(key, gameState);
 }
 
-//--------------------------------------------------------------
 void ofApp::keyReleased(int key) {
   gameState->keyReleased(key);
 }
 
-//--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button) {
   mousePressInitPosX = x;
   mousePressInitPosY = y;
 }
 
-//--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button) {
   for (Clickable* button : gameState->getClickables()) {
     if (button->inside(glm::vec2(mousePressInitPosX, mousePressInitPosY))) {

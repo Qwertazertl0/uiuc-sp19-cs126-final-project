@@ -46,7 +46,13 @@ StartMenuState::StartMenuState() {
 }
 
 void StartMenuState::update() {
-  //TODO: Keep for particle system later
+  if (!mouseOnButton && isMouseOnButton()) {
+    ofApp::audioEng->playMouseOver();
+    mouseOnButton = true;
+  } else if (mouseOnButton && !isMouseOnButton()) {
+    mouseOnButton = false;
+  }
+  //TODO: particle system
 }
 
 void StartMenuState::draw() {
@@ -64,8 +70,29 @@ void StartMenuState::draw() {
   ofSetColor(ofColor::white);
 }
 
+bool StartMenuState::isMouseOnButton() {
+  for (Clickable* button : getClickables()) {
+    if (button->inside(glm::vec2(ofGetMouseX(), ofGetMouseY()))) {
+      return true;
+    }
+  }
+  return false;
+}
+
 std::vector<Clickable*> StartMenuState::getClickables() {
-  return std::vector<Clickable*>({startButton, optionsButton, aboutButton, quitButton});
+  switch (drawItems) {
+    case MENU:
+      return std::vector<Clickable*>({ startButton, optionsButton, aboutButton, quitButton });
+      break;
+    case OPTIONS:
+      //TODO
+      break;
+    case ABOUT:
+      //TODO
+      break;
+    default:
+      return std::vector<Clickable*>();
+  }
 }
 
 void StartMenuState::clickOn(Clickable* button) {

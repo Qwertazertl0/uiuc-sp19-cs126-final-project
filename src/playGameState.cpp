@@ -49,7 +49,7 @@ void PlayGameState::update() {
 
 void PlayGameState::draw() {
   background->draw(0, 0, ofGetWindowWidth(), ofGetWindowHeight());
-
+  
   ofEnableAlphaBlending();
   int alpha = 255;
   int counter = 0;

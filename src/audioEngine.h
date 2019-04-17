@@ -13,4 +13,5 @@ class AudioEngine {
 	public:
 		AudioEngine();
 		~AudioEngine();
+    void playMouseOver();
 };

@@ -7,10 +7,14 @@ AudioEngine::AudioEngine() {
   bgm.setLooping(true);
   mouseover.load(mouseoverSoundPath.c_str());
 
-  std::cout << engine.play(bgm) << std::endl;
+  engine.play(bgm);
 }
 
 AudioEngine::~AudioEngine() {
   engine.fadeGlobalVolume(0, 1);
   engine.deinit();
+}
+
+void AudioEngine::playMouseOver() {
+  engine.play(mouseover, 2.0f);
 }
