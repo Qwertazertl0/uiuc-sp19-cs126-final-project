@@ -50,10 +50,9 @@ void StartMenuState::update() {
 }
 
 void StartMenuState::draw() {
-  if (background->isAllocated())
-    background->draw(0, 0, ofGetWindowWidth(), ofGetWindowHeight());
-  if (logo->isAllocated())
-    logo->draw(logoCornerOffset, logoCornerOffset);
+  background->draw(0, 0, ofGetWindowWidth(), ofGetWindowHeight());
+
+  logo->draw(logoCornerOffset, logoCornerOffset);
   startButton->draw();
   optionsButton->draw();
   aboutButton->draw();
@@ -70,14 +69,27 @@ std::vector<Clickable*> StartMenuState::getClickables() {
 }
 
 void StartMenuState::clickOn(Clickable* button) {
-  if (button == startButton) {
-    nextState = new PlayGameState();
-  } else if (button == optionsButton) {
-    std::cout << "options" << std::endl; //TODO: options screen
-  } else if (button == aboutButton) {
-    std::cout << "about" << std::endl; //TODO: about screen
-  } else if (button == quitButton) {
-    ofExit(0);
+  switch (drawItems) {
+    case MENU:
+      if (button == startButton) {
+        nextState = new PlayGameState();
+      } else if (button == optionsButton) {
+        std::cout << "options" << std::endl; //TODO: options screen
+      } else if (button == aboutButton) {
+        std::cout << "about" << std::endl; //TODO: about screen
+      } else if (button == quitButton) {
+        //TODO: add fade out (graphics and audio)
+        ofExit(0);
+      }
+      break;
+    case OPTIONS:
+      
+      break;
+    case ABOUT:
+      
+      break;
+    default:
+      return;
   }
 }
 

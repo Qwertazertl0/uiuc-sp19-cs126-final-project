@@ -10,12 +10,25 @@ const int startYCoord = 450;
 const int optionsYCoord = 560;
 const int aboutYCoord = 670;
 const int quitYCoord = 780;
-
 const int logoCornerOffset = 82;
+
+//Sets of items to draw
+enum DrawGroup {
+  MENU = 0,
+  OPTIONS,
+  ABOUT
+};
 
 class StartMenuState : public AppState {
     ofImage* background;
     ofImage* logo;
+
+    Clickable* startButton;
+    Clickable* optionsButton;
+    Clickable* aboutButton;
+    Clickable* quitButton;
+
+    DrawGroup drawItems = MENU;
   public:
     StartMenuState(); //Load and instantiate all graphics and Clickables
     ~StartMenuState();
@@ -23,9 +36,4 @@ class StartMenuState : public AppState {
     void draw();
     std::vector<Clickable*> getClickables();
     void clickOn(Clickable* button);
-
-    Clickable* startButton;
-    Clickable* optionsButton;
-    Clickable* aboutButton;
-    Clickable* quitButton;
 };

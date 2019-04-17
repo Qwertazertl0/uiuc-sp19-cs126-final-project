@@ -48,15 +48,14 @@ void PlayGameState::update() {
 }
 
 void PlayGameState::draw() {
-  if (background->isAllocated())
-    background->draw(0, 0, ofGetWindowWidth(), ofGetWindowHeight());
+  background->draw(0, 0, ofGetWindowWidth(), ofGetWindowHeight());
 
   ofEnableAlphaBlending();
   int alpha = 255;
   int counter = 0;
   for (auto iter = trailPos.begin(); iter != trailPos.end(); ++iter) {
-    ofSetColor(ofColor::darkSlateBlue, alpha -= 255 / numFadeCircles);
-    drawDot(*iter, dotDrawRadius - dotDrawRadius / numFadeCircles * ++counter);
+    ofSetColor(ofColor::mediumPurple, alpha -= 255 / numFadeCircles);
+    drawDot(*iter, dotDrawRadius - fadeRadiusShrinkage / numFadeCircles * ++counter);
   }
   ofDisableAlphaBlending();
   ofSetColor(ofColor::white);
