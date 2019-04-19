@@ -29,12 +29,14 @@ Minimum Viable Product:
 	* Created clickable class to model buttons and act as transitions
 	* Added title screen and menus buttons (required several hours of tedious Photoshop and pixel measurements)
 	* Linked start and quit buttons to respective functionalities (about and options still need to be done)
+	* Basic particle system implemented; needs balancing
 
  * __Icon__
 	* Added an icon for the application (and a resource.h file). This required(?) that I change the target subsystem from console to windows. I do not know if this will cause later issues.
 
  * __Audio__
 	* Setup basic audio engine with a background music loop
+	* Added start menu mouseover sound effect
 
 ### April 7th - April 13th:
 

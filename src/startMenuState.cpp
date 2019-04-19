@@ -43,6 +43,8 @@ StartMenuState::StartMenuState() {
   hoverPath = new ofImage(quitHoverPath);
   loc = new ofRectangle(0, quitYCoord, menuButtonWidth, menuButtonHeight);
   quitButton = new Clickable(neutralPath, hoverPath, loc);
+
+  ofApp::partSystem->createParticle();
 }
 
 void StartMenuState::update() {
@@ -53,6 +55,7 @@ void StartMenuState::update() {
     mouseOnButton = false;
   }
   //TODO: particle system
+  ofApp::partSystem->updateParticles();
 }
 
 void StartMenuState::draw() {
@@ -68,6 +71,8 @@ void StartMenuState::draw() {
   ofSetCircleResolution(100);
   ofDrawCircle(glm::vec2(375, 170), 31);
   ofSetColor(ofColor::white);
+
+  ofApp::partSystem->draw(); //TODO: place here?
 }
 
 bool StartMenuState::isMouseOnButton() {

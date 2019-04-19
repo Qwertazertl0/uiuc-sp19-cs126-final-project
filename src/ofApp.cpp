@@ -4,12 +4,17 @@
 #include "startMenuState.h"
 
 AudioEngine* ofApp::audioEng;
+ParticleSystem* ofApp::partSystem;
 
 //--------------------------------------------------------------
 void ofApp::setup() {
+  ofImage* particleImage = new ofImage();
+  particleImage->load(particlePath);
+  partSystem = new ParticleSystem(particleImage);
+	audioEng = new AudioEngine();
+
 	ofSetEscapeQuitsApp(false);
   gameState = new StartMenuState();
-	audioEng = new AudioEngine();
 }
 
 void ofApp::exit() {

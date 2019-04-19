@@ -4,6 +4,9 @@
 
 #include "ofMain.h"
 #include "audioEngine.h"
+#include "particleSystem.h"
+
+const std::string particlePath = "graphics/spark.png";
 
 //Wrapper class linking graphic images to simple ofRectangle to create clickable buttons
 class Clickable {
@@ -11,8 +14,8 @@ class Clickable {
     ofImage* hoverImage;
     ofRectangle* position;
   public:
-    Clickable(ofImage* neutral, ofImage* hover, ofRectangle* pos) :
-              neutralImage(neutral), hoverImage(hover), position(pos) {}
+    Clickable(ofImage* neutral, ofImage* hover, ofRectangle* pos)
+              : neutralImage(neutral), hoverImage(hover), position(pos) {}
     ~Clickable();
     void draw();
     bool inside(glm::vec2 mousePos);
@@ -53,5 +56,6 @@ class ofApp : public ofBaseApp {
 		void gotMessage(ofMessage msg);
     
     static AudioEngine* audioEng;
+    static ParticleSystem* partSystem;
     AppState* gameState;
 };
