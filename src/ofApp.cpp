@@ -28,6 +28,10 @@ void ofApp::update() {
   if (gameState->nextState != gameState) {
     AppState* temp = gameState->nextState;
     delete gameState;
+    if (temp == nullptr) {
+      //TODO: fade out screen and audio
+      ofExit(0);
+    }
     gameState = temp;
   }
 }

@@ -28,7 +28,7 @@ Minimum Viable Product:
  * __Start Menu__
 	* Created clickable class to model buttons and act as transitions
 	* Added title screen and menus buttons (required several hours of tedious Photoshop and pixel measurements)
-	* Linked start and quit buttons to respective functionalities (about and options still need to be done)
+	* Linked start and quit buttons to respective functionalities as well as about and options (which still need content)
 	* Basic particle system implemented; needs balancing
 		* Particle system improved to handle many particles and automatic generation
 		* However, the distribution of random generation may need to be improved because sometimes dense areas of particles are generated

@@ -17,6 +17,8 @@ std::string aboutNeutralPath = "graphics/aboutNeutral.png";
 std::string aboutHoverPath = "graphics/aboutHover.png";
 std::string quitNeutralPath = "graphics/quitNeutral.png";
 std::string quitHoverPath = "graphics/quitHover.png";
+std::string returnNeutralPath = "graphics/backNeutral.png";
+std::string returnHoverPath = "graphics/backHover.png";
 
 StartMenuState::StartMenuState() {
   background = new ofImage();
@@ -44,6 +46,11 @@ StartMenuState::StartMenuState() {
   loc = new ofRectangle(0, quitYCoord, menuButtonWidth, menuButtonHeight);
   quitButton = new Clickable(neutralPath, hoverPath, loc);
 
+  neutralPath = new ofImage(returnNeutralPath);
+  hoverPath = new ofImage(returnHoverPath);
+  loc = new ofRectangle(returnXCoord, returnYCoord, returnWidth, returnHeight);
+  returnButton = new Clickable(neutralPath, hoverPath, loc);
+
   ofApp::partSystem->init(numInitParticles, initVel);
 }
 
@@ -54,24 +61,27 @@ void StartMenuState::update() {
   } else if (mouseOnButton && !isMouseOnButton()) {
     mouseOnButton = false;
   }
-  //TODO: particle system
+
   ofApp::partSystem->updateParticles();
 }
 
 void StartMenuState::draw() {
   background->draw(0, 0, ofGetWindowWidth(), ofGetWindowHeight());
-  ofApp::partSystem->draw(); //TODO: place here?
-
-  logo->draw(logoCornerOffset, logoCornerOffset);
-  startButton->draw();
-  optionsButton->draw();
-  aboutButton->draw();
-  quitButton->draw();
-
-  ofSetColor(ofColor::blanchedAlmond);
-  ofSetCircleResolution(100);
-  ofDrawCircle(glm::vec2(375, 170), 31);
-  ofSetColor(ofColor::white);
+  ofApp::partSystem->draw();
+  if (drawItems == MENU) {
+    ofPushStyle();
+      ofSetColor(ofColor::blanchedAlmond);
+      ofSetCircleResolution(100);
+      ofDrawCircle(glm::vec2(375, 170), 31);
+    ofPopStyle();
+    logo->draw(logoCornerOffset, logoCornerOffset);
+    startButton->draw();
+    optionsButton->draw();
+    aboutButton->draw();
+    quitButton->draw();
+  } else {
+    returnButton->draw();
+  }
 }
 
 bool StartMenuState::isMouseOnButton() {
@@ -86,13 +96,13 @@ bool StartMenuState::isMouseOnButton() {
 std::vector<Clickable*> StartMenuState::getClickables() {
   switch (drawItems) {
     case MENU:
-      return std::vector<Clickable*>({ startButton, optionsButton, aboutButton, quitButton });
+      return std::vector<Clickable*>({startButton, optionsButton, aboutButton, quitButton});
       break;
     case OPTIONS:
-      //TODO
+      return std::vector<Clickable*>({returnButton});
       break;
     case ABOUT:
-      //TODO
+      return std::vector<Clickable*>({returnButton});
       break;
     default:
       return std::vector<Clickable*>();
@@ -105,19 +115,18 @@ void StartMenuState::clickOn(Clickable* button) {
       if (button == startButton) {
         nextState = new PlayGameState();
       } else if (button == optionsButton) {
-        std::cout << "options" << std::endl; //TODO: options screen
+        drawItems = OPTIONS;
       } else if (button == aboutButton) {
-        std::cout << "about" << std::endl; //TODO: about screen
+        drawItems = ABOUT;
       } else if (button == quitButton) {
-        //TODO: add fade out (graphics and audio)
-        ofExit(0);
+        nextState = nullptr;
       }
       break;
     case OPTIONS:
-      
+      drawItems = MENU;
       break;
     case ABOUT:
-      
+      drawItems = MENU;
       break;
     default:
       return;

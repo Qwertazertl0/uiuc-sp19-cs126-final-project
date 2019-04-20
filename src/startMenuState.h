@@ -3,7 +3,7 @@
 #include "graphics/ofImage.h"
 #include "ofApp.h"
 
-//Positioning of buttons in pixels
+//Positioning of buttons in pixels (assumes screen is 1440x960)
 const int menuButtonWidth = 433;
 const int menuButtonHeight = 96;
 const int startYCoord = 450;
@@ -11,6 +11,10 @@ const int optionsYCoord = 560;
 const int aboutYCoord = 670;
 const int quitYCoord = 780;
 const int logoCornerOffset = 82;
+const int returnWidth = 292;
+const int returnHeight = 141;
+const int returnXCoord = 574;
+const int returnYCoord = 735;
 
 //Particles constants
 const int numInitParticles = 80;
@@ -31,6 +35,7 @@ class StartMenuState : public AppState {
     Clickable* optionsButton;
     Clickable* aboutButton;
     Clickable* quitButton;
+    Clickable* returnButton;
 
     DrawGroup drawItems = MENU;
 
