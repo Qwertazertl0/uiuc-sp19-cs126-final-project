@@ -21,11 +21,12 @@ const float dotDrawRadius = 40.0f;
 const float fadeRadiusShrinkage = 20.0f;
 
 //Miscellaneous
-const float meterToGraphicsScaleFactor = 40.0f;
-const std::string playGameBgPath = "graphics/gameBackground2.jpg";
+const float meterInPixels = 40.0f;
+const std::string playGameBgPath = "graphics/gameBackground3.jpg";
 
 class PlayGameState : public AppState {
   ofImage* background;
+  ofImage* wrapBackground; //drawn next to background offsreen to simulate wrap
 
   BOX2D_H::b2World* world;
   BOX2D_H::b2Body* dotBody;

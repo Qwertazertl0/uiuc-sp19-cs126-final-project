@@ -5,6 +5,8 @@
 PlayGameState::PlayGameState() {
   background = new ofImage();
   background->load(playGameBgPath);
+  wrapBackground = new ofImage();
+  wrapBackground->load(playGameBgPath);
 
   initBox2DWorld();
 }
@@ -63,15 +65,15 @@ void PlayGameState::draw() {
 }
 
 void PlayGameState::drawDot(b2Vec2 pos, float radius) {
-  pos.x = ofGetWindowWidth() / 2 + meterToGraphicsScaleFactor * pos.x;
-  pos.y = ofGetWindowHeight() - meterToGraphicsScaleFactor * pos.y;
+  pos.x = ofGetWindowWidth() / 2 + meterInPixels * pos.x;
+  pos.y = ofGetWindowHeight() - meterInPixels * pos.y;
   ofSetCircleResolution(100);
   ofDrawCircle(pos.x, pos.y, radius);
 }
 
 void PlayGameState::keyPressed(int key, AppState* currState) {
   float vertVel;
-  //TODO: redo left and right movements to have more inertia
+  //TODO: redo left and right movements
   switch (key) {
   case 'a':
     vertVel = dotBody->GetLinearVelocity().y;

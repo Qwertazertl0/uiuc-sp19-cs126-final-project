@@ -72,7 +72,7 @@ void StartMenuState::draw() {
     ofPushStyle();
       ofSetColor(ofColor::blanchedAlmond);
       ofSetCircleResolution(100);
-      ofDrawCircle(glm::vec2(375, 170), 31);
+      ofDrawCircle(glm::vec2(375, 170), 31); //TODO: pull to constant
     ofPopStyle();
     logo->draw(logoCornerOffset, logoCornerOffset);
     startButton->draw();

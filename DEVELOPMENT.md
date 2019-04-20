@@ -7,13 +7,19 @@ Minimum Viable Product:
 
 ## Current Objectives
  * Start Menu:
-	* Add particles flowing across the screen
-	* Link Buttons to functionality (about, options)
+	* Add volume control to options
+	* Add about text
+
+ * Issues:
+	* Framerate problems and inconsistent crackling in audio?
+	* May need to decouple game physics from update loop (how?)
+	* Quit button is lagging on exit
 
  * Game:
 	* Continue fine tuning physics and feel
 	* Create a basic demo level
 	* Add a return to menu clickable
+	* Camera panning
 
 ## Already Implemented
  * Basic dot graphics and movement established

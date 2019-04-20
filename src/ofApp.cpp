@@ -15,6 +15,8 @@ void ofApp::setup() {
 
 	ofSetEscapeQuitsApp(false);
   gameState = new StartMenuState();
+  ofSetFrameRate(30); //TODO: fps drops when laptop not plugged in?
+  //setting frame rate to 60 doesnt seem to work
 }
 
 void ofApp::exit() {

@@ -7,7 +7,8 @@ AudioEngine::AudioEngine() {
   bgm.setLooping(true);
   mouseover.load(mouseoverSoundPath.c_str());
 
-  engine.play(bgm);
+  auto handle = engine.play(bgm);
+  engine.setProtectVoice(handle, true);
 }
 
 AudioEngine::~AudioEngine() {
