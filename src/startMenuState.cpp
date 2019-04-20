@@ -44,7 +44,7 @@ StartMenuState::StartMenuState() {
   loc = new ofRectangle(0, quitYCoord, menuButtonWidth, menuButtonHeight);
   quitButton = new Clickable(neutralPath, hoverPath, loc);
 
-  ofApp::partSystem->createParticle();
+  ofApp::partSystem->init(numInitParticles, initVel);
 }
 
 void StartMenuState::update() {
@@ -60,6 +60,7 @@ void StartMenuState::update() {
 
 void StartMenuState::draw() {
   background->draw(0, 0, ofGetWindowWidth(), ofGetWindowHeight());
+  ofApp::partSystem->draw(); //TODO: place here?
 
   logo->draw(logoCornerOffset, logoCornerOffset);
   startButton->draw();
@@ -71,8 +72,6 @@ void StartMenuState::draw() {
   ofSetCircleResolution(100);
   ofDrawCircle(glm::vec2(375, 170), 31);
   ofSetColor(ofColor::white);
-
-  ofApp::partSystem->draw(); //TODO: place here?
 }
 
 bool StartMenuState::isMouseOnButton() {

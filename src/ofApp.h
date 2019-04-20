@@ -6,7 +6,7 @@
 #include "audioEngine.h"
 #include "particleSystem.h"
 
-const std::string particlePath = "graphics/spark.png";
+const std::string particlePath = "graphics/sparkle2.png";
 
 //Wrapper class linking graphic images to simple ofRectangle to create clickable buttons
 class Clickable {

@@ -12,6 +12,10 @@ const int aboutYCoord = 670;
 const int quitYCoord = 780;
 const int logoCornerOffset = 82;
 
+//Particles constants
+const int numInitParticles = 80;
+const glm::vec2 initVel(-0.7, -0.14);
+
 //Sets of items to draw
 enum DrawGroup {
   MENU = 0,
