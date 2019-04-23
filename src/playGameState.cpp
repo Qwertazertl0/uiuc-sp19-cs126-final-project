@@ -13,17 +13,40 @@ PlayGameState::PlayGameState() {
 
 void PlayGameState::initBox2DWorld() {
   world = new b2World(gravity);
+  initStaticBodies();
+  initDot();
+}
 
+void PlayGameState::initStaticBodies() {
+  //TODO: fix the garbage below
+  bodyDef.position.Set(0.0f, 0.0f);
+  BOX2D_H::b2Body* chainBody;
+  b2Vec2 edgesTest[4];
+  edgesTest[0].Set(0, 0);
+  edgesTest[1].Set(0, 24);
+  edgesTest[2].Set(108, 24);
+  edgesTest[3].Set(108, 0);
+  b2ChainShape worldEdges;
+  worldEdges.CreateChain(edgesTest, 4);
+  chainBody = world->CreateBody(&bodyDef);
+  b2FixtureDef chainFix;
+  chainFix.shape = &worldEdges;
+  chainBody->CreateFixture(&chainFix);
+
+  BOX2D_H::b2Body* groundBody;
+  
   //TODO: finalize init positions
   bodyDef.position.Set(0.0f, -10.0f);
   groundBody = world->CreateBody(&bodyDef);
   b2PolygonShape groundBox;
-  groundBox.SetAsBox(50.0f, 10.0f);
+  groundBox.SetAsBox(108.0f, 10.0f);
   groundBody->CreateFixture(&groundBox, 0.0f);
+}
 
+void PlayGameState::initDot() {
   bodyDef.type = b2_dynamicBody;
   bodyDef.fixedRotation = true;
-  bodyDef.position.Set(0.0f, 10.0f);
+  bodyDef.position.Set(18.0f, 12.0f);
   dotBody = world->CreateBody(&bodyDef);
   b2CircleShape dotShape;
   b2Vec2 dotPos(0.0f, 0.0f);
@@ -47,11 +70,29 @@ void PlayGameState::update() {
     float dampedHorVel = dotHorVelDampFactor * dotBody->GetLinearVelocity().x;
     dotBody->SetLinearVelocity(b2Vec2(dampedHorVel, dotBody->GetLinearVelocity().y));
   }
+
+  //TODO: camera panning updates
+  int dotPos = meterInPixels * dotBody->GetPosition().x;
+  int diff = dotPos - (ofGetWindowWidth() / 2 + absCameraPos);
+  if (diff > cameraPanDist && absCameraPos < absCameraMax) {
+    absCameraPos += diff - cameraPanDist;
+    absCameraPos = glm::min(absCameraMax, absCameraPos);
+  } else if (diff < -cameraPanDist && absCameraPos > 0) {
+    absCameraPos += diff + cameraPanDist;
+    absCameraPos = glm::max((short) 0, absCameraPos);
+  }
+  relCameraPos = absCameraPos % ofGetWindowWidth();
 }
 
 void PlayGameState::draw() {
-  background->draw(0, 0, ofGetWindowWidth(), ofGetWindowHeight());
-  
+  ofPushStyle();
+    ofSetColor(ofColor::ghostWhite);
+    ofDrawRectangle(0, 0, ofGetWindowWidth(), ofGetWindowHeight());
+  ofPopStyle();
+  background->draw(0 - relCameraPos, 0, ofGetWindowWidth(), ofGetWindowHeight() - groundOffset);
+  wrapBackground->draw(ofGetWindowWidth() - relCameraPos, 0, ofGetWindowWidth(),
+                       ofGetWindowHeight() - groundOffset);
+
   ofEnableAlphaBlending();
   int alpha = 255;
   int counter = 0;
@@ -65,8 +106,8 @@ void PlayGameState::draw() {
 }
 
 void PlayGameState::drawDot(b2Vec2 pos, float radius) {
-  pos.x = ofGetWindowWidth() / 2 + meterInPixels * pos.x;
-  pos.y = ofGetWindowHeight() - meterInPixels * pos.y;
+  pos.x = meterInPixels * pos.x - absCameraPos;
+  pos.y = ofGetWindowHeight() - meterInPixels * pos.y - groundOffset;
   ofSetCircleResolution(100);
   ofDrawCircle(pos.x, pos.y, radius);
 }
@@ -90,6 +131,7 @@ void PlayGameState::keyPressed(int key, AppState* currState) {
     }
     break;
   default:
+    //quick test code here
     break;
   }
 }
@@ -114,5 +156,4 @@ void PlayGameState::clickOn(Clickable* button) {
 PlayGameState::~PlayGameState() {
   delete world;
   dotBody = NULL;
-  groundBody = NULL;
 }

@@ -27,6 +27,9 @@ Minimum Viable Product:
 
 ## Weekly Logs
 
+### April 21th - April 28th:
+ * 
+
 ### April 14th - April 20th:
  * __Dot aesthetics__
 	* Did a fair amount of research on fbos. The dot trail was getting glitchy and slow so the better solution was to keep track of previous positions.
