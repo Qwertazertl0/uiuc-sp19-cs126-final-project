@@ -19,7 +19,6 @@ Minimum Viable Product:
 	* Continue fine tuning physics and feel
 	* Create a basic demo level
 	* Add a return to menu clickable
-	* Camera panning
 
 ## Already Implemented
  * Basic dot graphics and movement established
@@ -28,7 +27,14 @@ Minimum Viable Product:
 ## Weekly Logs
 
 ### April 21th - April 28th:
- * 
+ * __Dot Physics__
+	* Modified the dot left and right movements be more complex and have slightly more natural platform movements
+	* Jumping glitch is fixed, but will allow dot to "climb" up vertical surfaces which is honestly ok
+	* Double jumping added
+
+ * __Game World__
+	* Added static body class to help generate all the platforms
+	* Having just one platform already makes the init kind of slow; init in ofApp::setup()?
 
 ### April 14th - April 20th:
  * __Dot aesthetics__

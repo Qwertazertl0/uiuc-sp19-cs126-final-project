@@ -11,6 +11,7 @@ class PlayGameState : public AppState {
 
   b2World* world;
   b2Body* dotBody;
+  b2Body* groundBody;
 
   Level demoLevel;
 

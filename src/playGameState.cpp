@@ -1,6 +1,7 @@
 #include "playGameState.h"
 #include "ofMain.h"
 #include "Box2D\Box2D.h"
+#include <algorithm>
 
 PlayGameState::PlayGameState() {
   background = new ofImage();
@@ -20,30 +21,31 @@ void PlayGameState::initBox2DWorld() {
 void PlayGameState::initStaticBodies() {
   b2BodyDef bodyDef;
 
-  StaticRect p(8, 2, 30, 2, world);
+  StaticRect p(8, 4, 30, 2, world);
   demoLevel.platforms.push_back(p);
 
-  //TODO: fix the garbage below
-  bodyDef.position.Set(0.0f, 0.0f);
-  b2Body* chainBody;
-  b2Vec2 edgesTest[4];
-  edgesTest[0].Set(0, 0);
-  edgesTest[1].Set(0, 24);
-  edgesTest[2].Set(108, 24);
-  edgesTest[3].Set(108, 0);
-  b2ChainShape worldEdges;
-  worldEdges.CreateChain(edgesTest, 4);
-  chainBody = world->CreateBody(&bodyDef);
-  b2FixtureDef chainFix;
-  chainFix.shape = &worldEdges;
-  chainBody->CreateFixture(&chainFix);
+  //non-ground bounding edges
+  b2Body* worldEdge;
+  worldEdge = world->CreateBody(&bodyDef);
 
-  //TODO: finalize init positions
-  b2Body* groundBody;
-  bodyDef.position.Set(54.0f, -1.0f);
+  b2Vec2 edgeVert[4];
+  edgeVert[0].Set(0, 0);
+  edgeVert[1].Set(0, screenHeightMeters * 1.5);
+  edgeVert[2].Set(numScreenWidths * screenWidthMeters, screenHeightMeters * 1.5);
+  edgeVert[3].Set(numScreenWidths * screenWidthMeters, 0);
+  bodyDef.position.Set(0.0f, 0.0f);
+  b2ChainShape worldEdgeShape;
+  worldEdgeShape.CreateChain(edgeVert, 4);
+
+  b2FixtureDef chainFix;
+  chainFix.shape = &worldEdgeShape;
+  worldEdge->CreateFixture(&chainFix);
+
+  //TODO: split ground up to have gaps
+  bodyDef.position.Set(numScreenWidths * screenWidthMeters / 2, -1.0f);
   groundBody = world->CreateBody(&bodyDef);
   b2PolygonShape groundBox;
-  groundBox.SetAsBox(54.0f, 1.0f);
+  groundBox.SetAsBox(numScreenWidths * screenWidthMeters / 2, 1.0f);
   groundBody->CreateFixture(&groundBox, 0.0f);
 }
 
@@ -77,7 +79,7 @@ void PlayGameState::update() {
     dotBody->SetLinearVelocity(b2Vec2(dampedHorVel, dotBody->GetLinearVelocity().y));
   }
 
-  //TODO: camera panning updates
+  //camera panning updates
   int dotPos = meterInPixels * dotBody->GetPosition().x;
   int diff = dotPos - (ofGetWindowWidth() / 2 + absCameraPos);
   if (diff > cameraPanDist && absCameraPos < absCameraMax) {
@@ -87,7 +89,7 @@ void PlayGameState::update() {
     absCameraPos += diff + cameraPanDist;
     absCameraPos = glm::max((short) 0, absCameraPos);
   }
-  relCameraPos = absCameraPos % ofGetWindowWidth();
+  relCameraPos = (absCameraPos % ((int) (ofGetWindowWidth() / bgRelSpeed))) * bgRelSpeed;
 }
 
 void PlayGameState::draw() {
@@ -121,22 +123,40 @@ void PlayGameState::drawDot(b2Vec2 pos, float radius) {
 }
 
 void PlayGameState::keyPressed(int key) {
-  float vertVel;
-  //TODO: redo left and right movements
-  switch (key) {
+  float vertVel, horVel;
+  switch (key) { //TODO: move to separate functions
   case 'a':
     vertVel = dotBody->GetLinearVelocity().y;
-    dotBody->SetLinearVelocity(b2Vec2(-20, vertVel));
+    if (dotBody->GetContactList() &&
+      dotBody->GetContactList()->contact->IsTouching()) {
+      dotBody->SetLinearVelocity(b2Vec2(-maxHorSpeed, vertVel));
+    } else {
+      horVel = dotBody->GetLinearVelocity().x;
+      horVel -= horInc;
+      horVel = std::max(-maxHorSpeed, horVel);
+      dotBody->SetLinearVelocity(b2Vec2(horVel, vertVel));
+    }
     break;
   case 'd':
     vertVel = dotBody->GetLinearVelocity().y;
-    dotBody->SetLinearVelocity(b2Vec2(20, vertVel));
-    break;
-  case 'w':
     if (dotBody->GetContactList() &&
       dotBody->GetContactList()->contact->IsTouching()) {
-      dotBody->SetLinearVelocity(dotBody->GetLinearVelocity() + b2Vec2(0, 28));
+      dotBody->SetLinearVelocity(b2Vec2(maxHorSpeed, vertVel));
+    } else {
+      horVel = dotBody->GetLinearVelocity().x;
+      horVel +=  horInc;
+      horVel = std::min(maxHorSpeed, horVel);
+      dotBody->SetLinearVelocity(b2Vec2(horVel, vertVel));
     }
+    break;
+  case 'w': //TODO: plz fix
+    if (dotBody->GetContactList() &&
+        dotBody->GetContactList()->contact->IsTouching()) {
+      dotBody->SetLinearVelocity(b2Vec2(dotBody->GetLinearVelocity().x, maxVertSpeed));
+    }
+    break;
+  case ' ': //TODO: make double jump
+    dotBody->SetLinearVelocity(b2Vec2(dotBody->GetLinearVelocity().x, maxVertSpeed));
     break;
   default:
     //quick test code here

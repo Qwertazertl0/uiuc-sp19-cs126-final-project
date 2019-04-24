@@ -40,7 +40,12 @@ void ofApp::update() {
 
 //--------------------------------------------------------------
 void ofApp::draw() {
-	gameState->draw();
+  ofPushStyle();
+  ofSetColor(ofColor::black);
+  ofDrawRectangle(0, 0, ofGetWindowWidth(), ofGetWindowHeight());
+  ofPopStyle();
+	if (gameState) 
+    gameState->draw();
 }
 
 //--------------------------------------------------------------
