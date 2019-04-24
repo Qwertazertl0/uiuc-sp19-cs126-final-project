@@ -19,6 +19,7 @@ Minimum Viable Product:
 	* Continue fine tuning physics and feel
 	* Create a basic demo level
 	* Add a return to menu clickable
+	* Round off platforms?
 
 ## Already Implemented
  * Basic dot graphics and movement established

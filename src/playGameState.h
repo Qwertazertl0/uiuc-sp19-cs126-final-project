@@ -11,7 +11,7 @@ class PlayGameState : public AppState {
 
   b2World* world;
   b2Body* dotBody;
-  b2Body* groundBody;
+  std::list<b2Body*> groundBodies;
 
   Level demoLevel;
 
@@ -26,6 +26,7 @@ public:
   ~PlayGameState();
   void initBox2DWorld();
   void initStaticBodies();
+  void initGround();
   void initDot();
 
   void update();
@@ -34,6 +35,7 @@ public:
 
   void keyPressed(int key);
   void keyReleased(int key);
+  bool isInAir();
   std::vector<Clickable*> getClickables();
   void clickOn(Clickable* button);
 };

@@ -21,8 +21,11 @@ void PlayGameState::initBox2DWorld() {
 void PlayGameState::initStaticBodies() {
   b2BodyDef bodyDef;
 
-  StaticRect p(8, 4, 30, 2, world);
-  demoLevel.platforms.push_back(p);
+  //platforms
+  for (int i = 0; i < numBodies; ++i) {
+    StaticRect p(bodyWidths[i], bodyHeights[i], bodyCenterX[i], bodyCenterY[i], world);
+    demoLevel.platforms.push_back(p);
+  }
 
   //non-ground bounding edges
   b2Body* worldEdge;
@@ -41,12 +44,25 @@ void PlayGameState::initStaticBodies() {
   chainFix.shape = &worldEdgeShape;
   worldEdge->CreateFixture(&chainFix);
 
-  //TODO: split ground up to have gaps
-  bodyDef.position.Set(numScreenWidths * screenWidthMeters / 2, -1.0f);
-  groundBody = world->CreateBody(&bodyDef);
-  b2PolygonShape groundBox;
-  groundBox.SetAsBox(numScreenWidths * screenWidthMeters / 2, 1.0f);
-  groundBody->CreateFixture(&groundBox, 0.0f);
+  //ground pieces
+  initGround();
+}
+
+void PlayGameState::initGround() {
+  b2BodyDef bodyDef;
+
+  for (int i = 0; i < 2 * numGroundPieces; i += 2) {
+    b2Body* groundBody;
+    bodyDef.position.Set((groundBounds[i] + groundBounds[i + 1]) / 2, -1.0f);
+    groundBody = world->CreateBody(&bodyDef);
+    b2PolygonShape groundBox;
+    float* width = new float; //TODO: check memory leak?
+    *width = groundBounds[i + 1] - groundBounds[i];
+    groundBox.SetAsBox(*width / 2, 1.0f);
+    groundBody->CreateFixture(&groundBox, 0.0f);
+    groundBody->SetUserData(width);
+    groundBodies.push_back(groundBody);
+  }
 }
 
 void PlayGameState::initDot() {
@@ -75,12 +91,17 @@ void PlayGameState::update() {
     trailPos.pop_back();
 
   if (!ofGetKeyPressed()) {
-    float dampedHorVel = dotHorVelDampFactor * dotBody->GetLinearVelocity().x;
+    float dampedHorVel;
+    if (isInAir()) {
+      dampedHorVel = inAirHorVelDampFactor * dotBody->GetLinearVelocity().x;
+    } else {
+      dampedHorVel = dotHorVelDampFactor * dotBody->GetLinearVelocity().x;
+    }
     dotBody->SetLinearVelocity(b2Vec2(dampedHorVel, dotBody->GetLinearVelocity().y));
   }
 
   //camera panning updates
-  int dotPos = meterInPixels * dotBody->GetPosition().x;
+  int dotPos = pixelsPerMeter * dotBody->GetPosition().x;
   int diff = dotPos - (ofGetWindowWidth() / 2 + absCameraPos);
   if (diff > cameraPanDist && absCameraPos < absCameraMax) {
     absCameraPos += diff - cameraPanDist;
@@ -93,9 +114,17 @@ void PlayGameState::update() {
 }
 
 void PlayGameState::draw() {
+  
   ofPushStyle();
-    ofSetColor(ofColor::ghostWhite);
+    ofSetColor(ofColor::black);
     ofDrawRectangle(0, 0, ofGetWindowWidth(), ofGetWindowHeight());
+    ofSetColor(ofColor::darkViolet);
+    ofSetRectMode(OF_RECTMODE_CENTER);
+    for (b2Body* groundPiece : groundBodies) {
+      float x = groundPiece->GetPosition().x * pixelsPerMeter - absCameraPos;
+      float* w = (float*) groundPiece->GetUserData();
+      ofDrawRectangle(x, ofGetWindowHeight() - groundOffset / 2, (*w)*pixelsPerMeter, groundOffset);
+    }
   ofPopStyle();
   background->draw(0 - relCameraPos, 0, ofGetWindowWidth(), ofGetWindowHeight() - groundOffset);
   wrapBackground->draw(ofGetWindowWidth() - relCameraPos, 0, ofGetWindowWidth(),
@@ -113,11 +142,13 @@ void PlayGameState::draw() {
   ofDisableAlphaBlending();
   ofSetColor(ofColor::white);
   drawDot(dotBody->GetPosition(), dotDrawRadius);
+
+  //TODO: to home clickable
 }
 
 void PlayGameState::drawDot(b2Vec2 pos, float radius) {
-  pos.x = meterInPixels * pos.x - absCameraPos;
-  pos.y = ofGetWindowHeight() - meterInPixels * pos.y - groundOffset;
+  pos.x = pixelsPerMeter * pos.x - absCameraPos;
+  pos.y = ofGetWindowHeight() - pixelsPerMeter * pos.y - groundOffset;
   ofSetCircleResolution(100);
   ofDrawCircle(pos.x, pos.y, radius);
 }
@@ -150,8 +181,7 @@ void PlayGameState::keyPressed(int key) {
     }
     break;
   case 'w': //TODO: plz fix
-    if (dotBody->GetContactList() &&
-        dotBody->GetContactList()->contact->IsTouching()) {
+    if (!isInAir()) {
       dotBody->SetLinearVelocity(b2Vec2(dotBody->GetLinearVelocity().x, maxVertSpeed));
     }
     break;
@@ -159,18 +189,27 @@ void PlayGameState::keyPressed(int key) {
     dotBody->SetLinearVelocity(b2Vec2(dotBody->GetLinearVelocity().x, maxVertSpeed));
     break;
   default:
-    //quick test code here
+    //TODO: remove this todo; quick test code here
     break;
   }
 }
 
-void PlayGameState::keyReleased(int key) {
+void PlayGameState::keyReleased(int key) { //TODO: necessary?
   switch (key) {
   case 'w':
     break;
   default:
     break;
   }
+}
+
+bool PlayGameState::isInAir() {
+  for (auto con = dotBody->GetContactList(); con != nullptr; con = con->next) {
+    if (con->contact->IsTouching()) {
+      return false;
+    }
+  }
+  return true;
 }
 
 std::vector<Clickable*> PlayGameState::getClickables() {
