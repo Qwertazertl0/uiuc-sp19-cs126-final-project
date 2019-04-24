@@ -26,7 +26,7 @@ class AppState {
   public:
     virtual void update() {}
     virtual void draw() {}
-    virtual void keyPressed(int key, AppState* currState) {} //TODO: passing in currState is weird, find better workaround
+    virtual void keyPressed(int key) {}
     virtual void keyReleased(int key) {}
     virtual std::vector<Clickable*> getClickables() {return std::vector<Clickable*>();};
     virtual void clickOn(Clickable* button) {}

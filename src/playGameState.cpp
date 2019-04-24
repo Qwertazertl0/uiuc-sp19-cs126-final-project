@@ -18,9 +18,14 @@ void PlayGameState::initBox2DWorld() {
 }
 
 void PlayGameState::initStaticBodies() {
+  b2BodyDef bodyDef;
+
+  StaticRect p(8, 2, 30, 2, world);
+  demoLevel.platforms.push_back(p);
+
   //TODO: fix the garbage below
   bodyDef.position.Set(0.0f, 0.0f);
-  BOX2D_H::b2Body* chainBody;
+  b2Body* chainBody;
   b2Vec2 edgesTest[4];
   edgesTest[0].Set(0, 0);
   edgesTest[1].Set(0, 24);
@@ -33,17 +38,18 @@ void PlayGameState::initStaticBodies() {
   chainFix.shape = &worldEdges;
   chainBody->CreateFixture(&chainFix);
 
-  BOX2D_H::b2Body* groundBody;
-  
   //TODO: finalize init positions
-  bodyDef.position.Set(0.0f, -10.0f);
+  b2Body* groundBody;
+  bodyDef.position.Set(54.0f, -1.0f);
   groundBody = world->CreateBody(&bodyDef);
   b2PolygonShape groundBox;
-  groundBox.SetAsBox(108.0f, 10.0f);
+  groundBox.SetAsBox(54.0f, 1.0f);
   groundBody->CreateFixture(&groundBox, 0.0f);
 }
 
 void PlayGameState::initDot() {
+  b2BodyDef bodyDef;
+
   bodyDef.type = b2_dynamicBody;
   bodyDef.fixedRotation = true;
   bodyDef.position.Set(18.0f, 12.0f);
@@ -93,6 +99,8 @@ void PlayGameState::draw() {
   wrapBackground->draw(ofGetWindowWidth() - relCameraPos, 0, ofGetWindowWidth(),
                        ofGetWindowHeight() - groundOffset);
 
+  demoLevel.draw(absCameraPos);
+
   ofEnableAlphaBlending();
   int alpha = 255;
   int counter = 0;
@@ -112,7 +120,7 @@ void PlayGameState::drawDot(b2Vec2 pos, float radius) {
   ofDrawCircle(pos.x, pos.y, radius);
 }
 
-void PlayGameState::keyPressed(int key, AppState* currState) {
+void PlayGameState::keyPressed(int key) {
   float vertVel;
   //TODO: redo left and right movements
   switch (key) {
@@ -156,4 +164,4 @@ void PlayGameState::clickOn(Clickable* button) {
 PlayGameState::~PlayGameState() {
   delete world;
   dotBody = NULL;
-}
+} 

@@ -45,7 +45,7 @@ void ofApp::draw() {
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key) {
-  gameState->keyPressed(key, gameState);
+  gameState->keyPressed(key);
 }
 
 void ofApp::keyReleased(int key) {
