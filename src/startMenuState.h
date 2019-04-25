@@ -42,6 +42,7 @@ class StartMenuState : public AppState {
     ofImage* logo;
     ofImage* aboutText;
     ofImage* volumeText;
+    ofImage* volumeBar;
     ofImage* jumpLimitText;
 
     Clickable* startButton;
@@ -51,6 +52,7 @@ class StartMenuState : public AppState {
     Clickable* returnButton;
     Clickable* onButton;
     Clickable* offButton;
+    Clickable* slider;
 
     DrawGroup drawItems = MENU;
     bool jumpLimitOn = true;

@@ -72,13 +72,3 @@ void ofApp::mouseReleased(int x, int y, int button) {
     }
   }
 }
-
-//--------------------------------------------------------------
-void ofApp::gotMessage(ofMessage msg) {
-
-}
-
-//--------------------------------------------------------------
-void ofApp::dragEvent(ofDragInfo dragInfo) {
-
-}

@@ -4,6 +4,10 @@
 //Miscellaneous
 const float pixelsPerMeter = 40.0f; //Changing this may require changes to some constants above
 const std::string playGameBgPath = "graphics/gameBackground3.jpg";
+const std::string homeNeutralPath = "graphics/homeNeutral.png";
+const std::string homeHoverPath = "graphics/homeHover.png";
+const int homeButtonSideLength = 60;
+const int cornerOffset = 15;
 
 //Box2D world physics solver parameters
 const float timeStep = 1.0f / 30.0f;

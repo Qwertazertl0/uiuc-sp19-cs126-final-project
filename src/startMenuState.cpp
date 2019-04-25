@@ -75,6 +75,7 @@ StartMenuState::StartMenuState() {
   loc = new ofRectangle(onOffX, onOffY, onOffWidth, onOffHeight);
   offButton = new Clickable(neutralPath, hoverPath, loc);
 
+  ofApp::partSystem->clear();
   ofApp::partSystem->init(numInitParticles, initVel);
 }
 
@@ -92,6 +93,7 @@ void StartMenuState::update() {
 void StartMenuState::draw() {
   background->draw(0, 0, ofGetWindowWidth(), ofGetWindowHeight());
   ofApp::partSystem->draw();
+  ofEnableAlphaBlending();
   if (drawItems == MENU) {
     ofPushStyle();
       ofSetColor(ofColor::white);
@@ -116,6 +118,7 @@ void StartMenuState::draw() {
     jumpLimitText->draw(jumpLimX, jumpLimY);
     returnButton->draw();
   }
+  ofDisableAlphaBlending();
 }
 
 bool StartMenuState::isMouseOnButton() {

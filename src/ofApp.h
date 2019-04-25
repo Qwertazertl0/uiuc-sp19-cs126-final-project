@@ -52,8 +52,6 @@ class ofApp : public ofBaseApp {
 		void keyReleased(int key);
 		void mousePressed(int x, int y, int button);
 		void mouseReleased(int x, int y, int button);
-		void dragEvent(ofDragInfo dragInfo);
-		void gotMessage(ofMessage msg);
     
     static AudioEngine* audioEng;
     static ParticleSystem* partSystem;

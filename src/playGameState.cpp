@@ -8,6 +8,12 @@ PlayGameState::PlayGameState(bool jumpLimit) {
   background->load(playGameBgPath);
   wrapBackground = new ofImage();
   wrapBackground->load(playGameBgPath);
+  
+  ofImage* neutralPath = new ofImage(homeNeutralPath);
+  ofImage* hoverPath = new ofImage(homeHoverPath);
+  int s = homeButtonSideLength;
+  ofRectangle* loc = new ofRectangle(ofGetWindowWidth() - s - cornerOffset, cornerOffset, s, s);
+  homeButton = new Clickable(neutralPath, hoverPath, loc);
 
   jumpLimitOn = jumpLimit;
   initBox2DWorld();
@@ -143,11 +149,11 @@ void PlayGameState::draw() {
     ofSetColor(ofColor::mediumPurple, alpha -= 255 / numFadeCircles);
     drawDot(*iter, dotDrawRadius - fadeRadiusShrinkage / numFadeCircles * ++counter);
   }
-  ofDisableAlphaBlending();
   ofSetColor(ofColor::white);
   drawDot(dotBody->GetPosition(), dotDrawRadius);
 
-  //TODO: to home clickable
+  homeButton->draw();
+  ofDisableAlphaBlending();
 }
 
 void PlayGameState::drawDot(b2Vec2 pos, float radius) {
@@ -159,7 +165,7 @@ void PlayGameState::drawDot(b2Vec2 pos, float radius) {
 
 void PlayGameState::keyPressed(int key) {
   float vertVel, horVel;
-  switch (key) { //TODO: move to separate functions
+  switch (key) {
   case 'a':
     vertVel = dotBody->GetLinearVelocity().y;
     if (dotBody->GetContactList() &&
@@ -184,7 +190,7 @@ void PlayGameState::keyPressed(int key) {
       dotBody->SetLinearVelocity(b2Vec2(horVel, vertVel));
     }
     break;
-  case 'w': //TODO: plz fix
+  case 'w':
     if (!isInAir()) {
       dotBody->SetLinearVelocity(b2Vec2(dotBody->GetLinearVelocity().x, maxVertSpeed));
     }
@@ -196,7 +202,6 @@ void PlayGameState::keyPressed(int key) {
     }
     break;
   default:
-    //TODO: remove this todo; quick test code here
     break;
   }
 }
@@ -223,14 +228,19 @@ bool PlayGameState::isInAir() {
 }
 
 std::vector<Clickable*> PlayGameState::getClickables() {
-  return std::vector<Clickable*>(); //TODO: add return to menu clickable
+  return std::vector<Clickable*>({homeButton});
 }
 
 void PlayGameState::clickOn(Clickable* button) {
-  //TODO: add return to menu clickable
+  if (button == homeButton) {
+    nextState = new StartMenuState();
+  }
 }
 
 PlayGameState::~PlayGameState() {
   delete world;
+  delete background;
+  delete wrapBackground;
+  delete homeButton;
   dotBody = NULL;
 } 

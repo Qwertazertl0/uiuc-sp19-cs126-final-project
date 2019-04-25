@@ -13,11 +13,11 @@ Minimum Viable Product:
  * Issues: (Reach goal)
 	* Framerate problems and inconsistent crackling in audio?
 	* May need to decouple game physics from update loop (how?)
+	* Slow state creation; need to create once and "store" the state
 
  * Game:
 	* Continue fine tuning physics and feel
 	* Create a basic demo level
-	* Add a return to menu clickable
 	* Need dot reset function
 	* Round off platforms?
 	* Add slow particle drift to background
@@ -37,6 +37,7 @@ Minimum Viable Product:
  * __Game World__
 	* Added static body class to help generate all the platforms
 	* Having just one platform already makes the init kind of slow; init in ofApp::setup()?
+	* Added return to start menu button
 
  * __Start Menu__
 	* Added about text

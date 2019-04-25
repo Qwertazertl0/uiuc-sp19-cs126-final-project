@@ -4,10 +4,12 @@
 #include "level.h"
 #include <vector>
 #include "playGameConstants.h"
+#include "startMenuState.h"
 
 class PlayGameState : public AppState {
   ofImage* background;
   ofImage* wrapBackground; //drawn next to background offsreen to simulate wrap
+  Clickable* homeButton;
 
   b2World* world;
   b2Body* dotBody;
