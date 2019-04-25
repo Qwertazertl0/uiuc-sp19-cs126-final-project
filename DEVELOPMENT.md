@@ -8,22 +8,23 @@ Minimum Viable Product:
 ## Current Objectives
  * Start Menu:
 	* Add volume control to options
-	* Add about text
+	* Smooth transitions? (Reach goal)
 
- * Issues:
+ * Issues: (Reach goal)
 	* Framerate problems and inconsistent crackling in audio?
 	* May need to decouple game physics from update loop (how?)
-	* Quit button is lagging on exit
 
  * Game:
 	* Continue fine tuning physics and feel
 	* Create a basic demo level
 	* Add a return to menu clickable
+	* Need dot reset function
 	* Round off platforms?
+	* Add slow particle drift to background
 
 ## Already Implemented
- * Basic dot graphics and movement established
- * Start menu visuals mostly fleshed out
+ * Dot game physics mostly implemented, some platforms added, camera scrolling finished
+ * Start menu almost fully complete (missing options)
 
 ## Weekly Logs
 
@@ -31,11 +32,14 @@ Minimum Viable Product:
  * __Dot Physics__
 	* Modified the dot left and right movements be more complex and have slightly more natural platform movements
 	* Jumping glitch is fixed, but will allow dot to "climb" up vertical surfaces which is honestly ok
-	* Double jumping added
+	* Double jumping added; isInAir() fixed for axis-aligned surfaces
 
  * __Game World__
 	* Added static body class to help generate all the platforms
 	* Having just one platform already makes the init kind of slow; init in ofApp::setup()?
+
+ * __Start Menu__
+	* Added about text
 
 ### April 14th - April 20th:
  * __Dot aesthetics__

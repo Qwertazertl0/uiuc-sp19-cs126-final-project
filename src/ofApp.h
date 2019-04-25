@@ -21,7 +21,7 @@ class Clickable {
     bool inside(glm::vec2 mousePos);
 };
 
-//Abstract class representing each "screen" (e.g. start menu, settings, about)
+//Abstract class representing each "screen" (e.g. start menu, game)
 class AppState {
   public:
     virtual void update() {}

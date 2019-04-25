@@ -3,12 +3,13 @@
 #include "Box2D\Box2D.h"
 #include <algorithm>
 
-PlayGameState::PlayGameState() {
+PlayGameState::PlayGameState(bool jumpLimit) {
   background = new ofImage();
   background->load(playGameBgPath);
   wrapBackground = new ofImage();
   wrapBackground->load(playGameBgPath);
 
+  jumpLimitOn = jumpLimit;
   initBox2DWorld();
 }
 
@@ -70,7 +71,7 @@ void PlayGameState::initDot() {
 
   bodyDef.type = b2_dynamicBody;
   bodyDef.fixedRotation = true;
-  bodyDef.position.Set(18.0f, 12.0f);
+  bodyDef.position.Set(9.375f, 19.75f); //TODO: pull to constants
   dotBody = world->CreateBody(&bodyDef);
   b2CircleShape dotShape;
   b2Vec2 dotPos(0.0f, 0.0f);
@@ -100,6 +101,10 @@ void PlayGameState::update() {
     dotBody->SetLinearVelocity(b2Vec2(dampedHorVel, dotBody->GetLinearVelocity().y));
   }
 
+  if (!isInAir()) {
+    jumped = false;
+  }
+
   //camera panning updates
   int dotPos = pixelsPerMeter * dotBody->GetPosition().x;
   int diff = dotPos - (ofGetWindowWidth() / 2 + absCameraPos);
@@ -114,7 +119,6 @@ void PlayGameState::update() {
 }
 
 void PlayGameState::draw() {
-  
   ofPushStyle();
     ofSetColor(ofColor::black);
     ofDrawRectangle(0, 0, ofGetWindowWidth(), ofGetWindowHeight());
@@ -185,8 +189,11 @@ void PlayGameState::keyPressed(int key) {
       dotBody->SetLinearVelocity(b2Vec2(dotBody->GetLinearVelocity().x, maxVertSpeed));
     }
     break;
-  case ' ': //TODO: make double jump
-    dotBody->SetLinearVelocity(b2Vec2(dotBody->GetLinearVelocity().x, maxVertSpeed));
+  case ' ':
+    if (!jumpLimitOn || (isInAir() && !jumped)) {
+      dotBody->SetLinearVelocity(b2Vec2(dotBody->GetLinearVelocity().x, maxVertSpeed));
+      jumped = true;
+    }
     break;
   default:
     //TODO: remove this todo; quick test code here
@@ -206,7 +213,10 @@ void PlayGameState::keyReleased(int key) { //TODO: necessary?
 bool PlayGameState::isInAir() {
   for (auto con = dotBody->GetContactList(); con != nullptr; con = con->next) {
     if (con->contact->IsTouching()) {
-      return false;
+      b2Vec2 contactNormal = con->contact->GetManifold()->localNormal;
+      if (contactNormal.y > airborneYDiffContactLimit) {
+        return false;
+      }
     }
   }
   return true;

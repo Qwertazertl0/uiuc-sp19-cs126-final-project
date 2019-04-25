@@ -12,8 +12,9 @@ class PlayGameState : public AppState {
   b2World* world;
   b2Body* dotBody;
   std::list<b2Body*> groundBodies;
-
   Level demoLevel;
+  bool jumpLimitOn;
+  bool jumped;
 
   std::list<b2Vec2> trailPos;
   b2Vec2 prevDotPos;
@@ -22,7 +23,7 @@ class PlayGameState : public AppState {
   short absCameraPos = 0;
   short absCameraMax = ofGetWindowWidth() * (numScreenWidths - 1);
 public:
-  PlayGameState();
+  PlayGameState(bool jumpLimit);
   ~PlayGameState();
   void initBox2DWorld();
   void initStaticBodies();

@@ -20,11 +20,25 @@ std::string quitHoverPath = "graphics/quitHover.png";
 std::string returnNeutralPath = "graphics/backNeutral.png";
 std::string returnHoverPath = "graphics/backHover.png";
 
+std::string volTextPath = "graphics/volumeText.png";
+std::string jumpLimitPath = "graphics/jumpLimitText.png";
+std::string onNeutralPath = "graphics/onNeutral.png";
+std::string onHoverPath = "graphics/onHover.png";
+std::string offNeutralPath = "graphics/offNeutral.png";
+std::string offHoverPath = "graphics/offHover.png";
+std::string aboutTextPath = "graphics/aboutText.png";
+
 StartMenuState::StartMenuState() {
   background = new ofImage();
   background->load(startMenuBgPath);
   logo = new ofImage();
   logo->load(logoPath);
+  aboutText = new ofImage();
+  aboutText->load(aboutTextPath);
+  volumeText = new ofImage();
+  volumeText->load(volTextPath);
+  jumpLimitText = new ofImage();
+  jumpLimitText->load(jumpLimitPath);
 
   ofImage* neutralPath = new ofImage(startNeutralPath);
   ofImage* hoverPath = new ofImage(startHoverPath);
@@ -51,6 +65,16 @@ StartMenuState::StartMenuState() {
   loc = new ofRectangle(returnXCoord, returnYCoord, returnWidth, returnHeight);
   returnButton = new Clickable(neutralPath, hoverPath, loc);
 
+  neutralPath = new ofImage(onNeutralPath);
+  hoverPath = new ofImage(onHoverPath);
+  loc = new ofRectangle(onOffX, onOffY, onOffWidth, onOffHeight);
+  onButton = new Clickable(neutralPath, hoverPath, loc);
+
+  neutralPath = new ofImage(offNeutralPath);
+  hoverPath = new ofImage(offHoverPath);
+  loc = new ofRectangle(onOffX, onOffY, onOffWidth, onOffHeight);
+  offButton = new Clickable(neutralPath, hoverPath, loc);
+
   ofApp::partSystem->init(numInitParticles, initVel);
 }
 
@@ -70,16 +94,26 @@ void StartMenuState::draw() {
   ofApp::partSystem->draw();
   if (drawItems == MENU) {
     ofPushStyle();
-      ofSetColor(ofColor::blanchedAlmond);
+      ofSetColor(ofColor::white);
       ofSetCircleResolution(100);
-      ofDrawCircle(glm::vec2(375, 170), 31); //TODO: pull to constant
+      ofDrawCircle(glm::vec2(375, 170), 30); //TODO: pull to constant
     ofPopStyle();
     logo->draw(logoCornerOffset, logoCornerOffset);
     startButton->draw();
     optionsButton->draw();
     aboutButton->draw();
     quitButton->draw();
+  } else if (drawItems == ABOUT) {
+    aboutText->draw(aboutTextX, aboutTextY);
+    returnButton->draw();
   } else {
+    if (jumpLimitOn) {
+      onButton->draw();
+    } else {
+      offButton->draw();
+    }
+    volumeText->draw(volTextX, volTextY);
+    jumpLimitText->draw(jumpLimX, jumpLimY);
     returnButton->draw();
   }
 }
@@ -99,7 +133,11 @@ std::vector<Clickable*> StartMenuState::getClickables() {
       return std::vector<Clickable*>({startButton, optionsButton, aboutButton, quitButton});
       break;
     case OPTIONS:
-      return std::vector<Clickable*>({returnButton});
+      if (jumpLimitOn) {
+        return std::vector<Clickable*>({returnButton, onButton});
+      } else {
+        return std::vector<Clickable*>({returnButton, offButton});
+      }
       break;
     case ABOUT:
       return std::vector<Clickable*>({returnButton});
@@ -113,7 +151,7 @@ void StartMenuState::clickOn(Clickable* button) {
   switch (drawItems) {
     case MENU:
       if (button == startButton) {
-        nextState = new PlayGameState();
+        nextState = new PlayGameState(jumpLimitOn);
       } else if (button == optionsButton) {
         drawItems = OPTIONS;
       } else if (button == aboutButton) {
@@ -123,7 +161,13 @@ void StartMenuState::clickOn(Clickable* button) {
       }
       break;
     case OPTIONS:
-      drawItems = MENU;
+      if (button == returnButton) {
+        drawItems = MENU;
+      } else if (button == onButton) {
+        jumpLimitOn = false;
+      } else if (button == offButton) {
+        jumpLimitOn = true;
+      }
       break;
     case ABOUT:
       drawItems = MENU;
@@ -135,8 +179,16 @@ void StartMenuState::clickOn(Clickable* button) {
 
 StartMenuState::~StartMenuState() {
   delete background;
+  delete logo;
+  delete aboutText;
+  delete volumeText;
+  delete jumpLimitText;
+
   delete startButton;
   delete optionsButton;
   delete aboutButton;
   delete quitButton;
+  delete returnButton;
+  delete onButton;
+  delete offButton;
 }
