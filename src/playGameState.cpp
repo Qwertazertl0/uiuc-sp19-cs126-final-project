@@ -91,7 +91,17 @@ void PlayGameState::initDot() {
   dotBody->CreateFixture(&dotFixture);
 }
 
+void PlayGameState::resetDot() {
+  trailPos.clear();
+  world->DestroyBody(dotBody);
+  initDot();
+}
+
 void PlayGameState::update() {
+  if (dotBody->GetPosition().y < dotResetHeight) {
+    resetDot();
+  }
+
   world->Step(timeStep, velocityIterations, positionIterations);
   trailPos.push_front(dotBody->GetPosition());
   if (trailPos.size() > numFadeCircles)

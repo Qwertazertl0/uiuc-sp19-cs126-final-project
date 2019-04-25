@@ -9,6 +9,7 @@ const std::string homeHoverPath = "graphics/homeHover.png";
 const int homeButtonSideLength = 60;
 const int cornerOffset = 15;
 const ofColor themePurple = ofColor(252, 35, 255);
+const int dotResetHeight = -15;
 
 //Box2D world physics solver parameters
 const float timeStep = 1.0f / 30.0f;

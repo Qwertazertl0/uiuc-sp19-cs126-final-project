@@ -17,7 +17,6 @@ Minimum Viable Product:
  * Game:
 	* Continue fine tuning physics and feel
 	* Create a basic demo level
-	* Need dot reset function
 	* Round off platforms?
 	* Add slow particle drift to background
 
@@ -42,6 +41,7 @@ Minimum Viable Product:
 	* Added static body class to help generate all the platforms
 	* Having just one platform already makes the init kind of slow; init in ofApp::setup()?
 	* Added return to start menu button
+	* Dot resets upon falling irrecoverably into gap
 
  * __Start Menu__
 	* Added about text
