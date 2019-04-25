@@ -3,7 +3,7 @@
 #include "soloud_wavstream.h"
 #include <string>
 
-const std::string gameBgmPath = "./data/audio/gameBgm.wav"; //TODO: turn sound back on
+const std::string gameBgmPath = "./data/audio/gameBgm.wav";
 const std::string mouseoverSoundPath = "./data/audio/mouseover2.wav";
 
 class AudioEngine {
@@ -14,4 +14,5 @@ class AudioEngine {
 		AudioEngine();
 		~AudioEngine();
     void playMouseOver();
+    void setVolume(float vol);
 };

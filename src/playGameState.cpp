@@ -128,7 +128,7 @@ void PlayGameState::draw() {
   ofPushStyle();
     ofSetColor(ofColor::black);
     ofDrawRectangle(0, 0, ofGetWindowWidth(), ofGetWindowHeight());
-    ofSetColor(ofColor::darkViolet);
+    ofSetColor(themePurple);
     ofSetRectMode(OF_RECTMODE_CENTER);
     for (b2Body* groundPiece : groundBodies) {
       float x = groundPiece->GetPosition().x * pixelsPerMeter - absCameraPos;

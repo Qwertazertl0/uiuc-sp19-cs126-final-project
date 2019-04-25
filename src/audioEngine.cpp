@@ -19,3 +19,7 @@ AudioEngine::~AudioEngine() {
 void AudioEngine::playMouseOver() {
   engine.play(mouseover, 2.0f);
 }
+
+void AudioEngine::setVolume(float vol) {
+  engine.setGlobalVolume(vol);
+}

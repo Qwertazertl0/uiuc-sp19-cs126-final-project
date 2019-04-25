@@ -1,44 +1,19 @@
 #include "startMenuState.h"
 #include "playGameState.h"
-#include "ofMain.h"
 #include "ofApp.h"
 
-#include <string>
-
-//Graphics image paths
-std::string startMenuBgPath = "graphics/start_menu_background4.jpg";
-std::string logoPath = "graphics/dotLogo.png";
-
-std::string startNeutralPath = "graphics/startNeutral.png";
-std::string startHoverPath = "graphics/startHover.png";
-std::string optionsNeutralPath = "graphics/optionsNeutral.png";
-std::string optionsHoverPath = "graphics/optionsHover.png";
-std::string aboutNeutralPath = "graphics/aboutNeutral.png";
-std::string aboutHoverPath = "graphics/aboutHover.png";
-std::string quitNeutralPath = "graphics/quitNeutral.png";
-std::string quitHoverPath = "graphics/quitHover.png";
-std::string returnNeutralPath = "graphics/backNeutral.png";
-std::string returnHoverPath = "graphics/backHover.png";
-
-std::string volTextPath = "graphics/volumeText.png";
-std::string jumpLimitPath = "graphics/jumpLimitText.png";
-std::string onNeutralPath = "graphics/onNeutral.png";
-std::string onHoverPath = "graphics/onHover.png";
-std::string offNeutralPath = "graphics/offNeutral.png";
-std::string offHoverPath = "graphics/offHover.png";
-std::string aboutTextPath = "graphics/aboutText.png";
+StartMenuState::StartMenuState(bool jumpLimit) {
+  StartMenuState();
+  jumpLimitOn = jumpLimit;
+}
 
 StartMenuState::StartMenuState() {
-  background = new ofImage();
-  background->load(startMenuBgPath);
-  logo = new ofImage();
-  logo->load(logoPath);
-  aboutText = new ofImage();
-  aboutText->load(aboutTextPath);
-  volumeText = new ofImage();
-  volumeText->load(volTextPath);
-  jumpLimitText = new ofImage();
-  jumpLimitText->load(jumpLimitPath);
+  background = new ofImage(startMenuBgPath);
+  logo = new ofImage(logoPath);
+  aboutText = new ofImage(aboutTextPath);
+  volumeText = new ofImage(volTextPath);
+  volumeBar = new ofImage(volBarPath);
+  jumpLimitText = new ofImage(jumpLimitPath);
 
   ofImage* neutralPath = new ofImage(startNeutralPath);
   ofImage* hoverPath = new ofImage(startHoverPath);
@@ -75,8 +50,14 @@ StartMenuState::StartMenuState() {
   loc = new ofRectangle(onOffX, onOffY, onOffWidth, onOffHeight);
   offButton = new Clickable(neutralPath, hoverPath, loc);
 
+  neutralPath = new ofImage(sliderPath);
+  hoverPath = neutralPath;
+  loc = new ofRectangle(sliderX, sliderY, sliderWidth, sliderHeight);
+  slider = new Clickable(neutralPath, hoverPath, loc);
+
   ofApp::partSystem->clear();
   ofApp::partSystem->init(numInitParticles, initVel);
+  jumpLimitOn = true;
 }
 
 void StartMenuState::update() {
@@ -85,6 +66,16 @@ void StartMenuState::update() {
     mouseOnButton = true;
   } else if (mouseOnButton && !isMouseOnButton()) {
     mouseOnButton = false;
+  }
+
+  if (drawItems == OPTIONS && sliderSelected) {
+    sliderX = ofGetMouseX();
+    sliderX = glm::max(volBarX - sliderWidth / 2, sliderX);
+    sliderX = glm::min(sliderX, sliderDefaultX);
+    slider->getPosition()->setX(sliderX);
+
+    float percentVol = (sliderX - volBarX + sliderWidth / 2) / (float) volBarWidth;
+    ofApp::audioEng->setVolume(percentVol);
   }
 
   ofApp::partSystem->updateParticles();
@@ -97,8 +88,8 @@ void StartMenuState::draw() {
   if (drawItems == MENU) {
     ofPushStyle();
       ofSetColor(ofColor::white);
-      ofSetCircleResolution(100);
-      ofDrawCircle(glm::vec2(375, 170), 30); //TODO: pull to constant
+      ofSetCircleResolution(logoCircleResolution);
+      ofDrawCircle(logoCirclePos, logoCircleRadius);
     ofPopStyle();
     logo->draw(logoCornerOffset, logoCornerOffset);
     startButton->draw();
@@ -117,6 +108,13 @@ void StartMenuState::draw() {
     volumeText->draw(volTextX, volTextY);
     jumpLimitText->draw(jumpLimX, jumpLimY);
     returnButton->draw();
+
+    ofPushStyle();
+      ofSetColor(volumeBarColor);
+      ofDrawRectangle(volBarX, volBarY, sliderX - volBarX + sliderWidth / 2, volBarHeight);
+    ofPopStyle();
+    volumeBar->draw(volBarX, volBarY);
+    slider->draw();
   }
   ofDisableAlphaBlending();
 }
@@ -137,9 +135,9 @@ std::vector<Clickable*> StartMenuState::getClickables() {
       break;
     case OPTIONS:
       if (jumpLimitOn) {
-        return std::vector<Clickable*>({returnButton, onButton});
+        return std::vector<Clickable*>({returnButton, onButton, slider});
       } else {
-        return std::vector<Clickable*>({returnButton, offButton});
+        return std::vector<Clickable*>({returnButton, offButton, slider});
       }
       break;
     case ABOUT:
@@ -147,6 +145,12 @@ std::vector<Clickable*> StartMenuState::getClickables() {
       break;
     default:
       return std::vector<Clickable*>();
+  }
+}
+
+void StartMenuState::mousePressed() {
+  if (sliderSelected && !isMouseOnButton()) {
+    sliderSelected = false;
   }
 }
 
@@ -164,12 +168,19 @@ void StartMenuState::clickOn(Clickable* button) {
       }
       break;
     case OPTIONS:
+      if (sliderSelected) {
+        sliderSelected = false;
+        break;
+      }
+
       if (button == returnButton) {
         drawItems = MENU;
       } else if (button == onButton) {
         jumpLimitOn = false;
       } else if (button == offButton) {
         jumpLimitOn = true;
+      } else if (button == slider) {
+        sliderSelected = true;
       }
       break;
     case ABOUT:
@@ -185,6 +196,7 @@ StartMenuState::~StartMenuState() {
   delete logo;
   delete aboutText;
   delete volumeText;
+  delete volumeBar;
   delete jumpLimitText;
 
   delete startButton;
@@ -194,4 +206,5 @@ StartMenuState::~StartMenuState() {
   delete returnButton;
   delete onButton;
   delete offButton;
+  delete slider;
 }

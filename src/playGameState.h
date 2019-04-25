@@ -34,6 +34,7 @@ public:
 
   void update();
   void draw();
+  void mousePressed() {};
   void drawDot(b2Vec2 pos, float radius);
 
   void keyPressed(int key);

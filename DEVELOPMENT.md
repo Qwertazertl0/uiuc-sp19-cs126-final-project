@@ -7,7 +7,6 @@ Minimum Viable Product:
 
 ## Current Objectives
  * Start Menu:
-	* Add volume control to options
 	* Smooth transitions? (Reach goal)
 
  * Issues: (Reach goal)
@@ -23,8 +22,13 @@ Minimum Viable Product:
 	* Add slow particle drift to background
 
 ## Already Implemented
- * Dot game physics mostly implemented, some platforms added, camera scrolling finished
- * Start menu almost fully complete (missing options)
+ * Dot game physics mostly implemented
+	* Camera scrolling implemented (background at half-pace)
+	* Platforms mostly added (a few more needed)
+ * Start menu complete for minimum viable product:
+	* About page finished
+	* Options: Volume control and double jump limit toggle
+	* Start and quit functionality
 
 ## Weekly Logs
 
@@ -41,6 +45,7 @@ Minimum Viable Product:
 
  * __Start Menu__
 	* Added about text
+	* Added volume control and jumping toggles to the options page
 
 ### April 14th - April 20th:
  * __Dot aesthetics__

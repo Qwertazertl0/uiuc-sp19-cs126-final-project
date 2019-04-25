@@ -60,6 +60,7 @@ void ofApp::keyReleased(int key) {
 void ofApp::mousePressed(int x, int y, int button) {
   mousePressInitPosX = x;
   mousePressInitPosY = y;
+  gameState->mousePressed();
 }
 
 void ofApp::mouseReleased(int x, int y, int button) {

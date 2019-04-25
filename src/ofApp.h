@@ -19,6 +19,7 @@ class Clickable {
     ~Clickable();
     void draw();
     bool inside(glm::vec2 mousePos);
+    ofRectangle* getPosition() {return position;};
 };
 
 //Abstract class representing each "screen" (e.g. start menu, game)
@@ -28,6 +29,7 @@ class AppState {
     virtual void draw() {}
     virtual void keyPressed(int key) {}
     virtual void keyReleased(int key) {}
+    virtual void mousePressed() {}
     virtual std::vector<Clickable*> getClickables() {return std::vector<Clickable*>();};
     virtual void clickOn(Clickable* button) {}
     void setNextState(AppState* state) {
