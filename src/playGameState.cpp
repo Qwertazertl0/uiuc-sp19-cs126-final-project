@@ -265,7 +265,7 @@ std::vector<Clickable*> PlayGameState::getClickables() {
 
 void PlayGameState::clickOn(Clickable* button) {
   if (button == homeButton) {
-    nextState = new StartMenuState();
+    nextState = new StartMenuState(jumpLimitOn);
   }
 }
 

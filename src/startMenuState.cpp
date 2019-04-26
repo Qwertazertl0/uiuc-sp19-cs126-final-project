@@ -2,8 +2,7 @@
 #include "playGameState.h"
 #include "ofApp.h"
 
-StartMenuState::StartMenuState(bool jumpLimit) {
-  StartMenuState();
+StartMenuState::StartMenuState(bool jumpLimit) : StartMenuState() {
   jumpLimitOn = jumpLimit;
 }
 

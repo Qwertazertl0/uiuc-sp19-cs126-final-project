@@ -7,24 +7,22 @@ Minimum Viable Product:
 
 ## Current Objectives
  * Start Menu:
-	* Smooth transitions? (Reach goal)
+	* Smooth transitions (Reach goal)
 
- * Issues: (Reach goal)
+ * Issues and improvements: (Reach goal)
 	* Framerate problems and inconsistent crackling in audio?
-	* May need to decouple game physics from update loop (how?)
+		* Current workaround: set framerate low to 30 fps
 	* Slow state creation; need to create once and "store" the state
-	* Polygon draw issues in release
-	* Jump limit state does not save
+		* Current state: It's not really *that* slow, but it would be better to not make a new state every time
 
  * Game:
-	* Continue fine tuning physics and feel
-	* Round off platforms? Texture?
 	* Add slow particle drift to background
+	* Add more small sounds
 
 ## Already Implemented
- * Dot game physics mostly implemented
+ * Dot game physics at acceptable levels
 	* Camera scrolling implemented (background at half-pace)
-	* Platforms added
+	* Platforms added, dot reset and jumping finalized
  * Start menu complete for minimum viable product:
 	* About page finished
 	* Options: Volume control and double jump limit toggle

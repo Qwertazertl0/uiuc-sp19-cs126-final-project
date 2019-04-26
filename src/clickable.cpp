@@ -2,9 +2,10 @@
 #include "ofMain.h"
 
 Clickable::~Clickable() {
-  delete neutralImage;
-  delete hoverImage;
   delete position;
+  delete neutralImage;
+  if (hoverImage != neutralImage)
+    delete hoverImage;
 }
 
 void Clickable::draw() {
