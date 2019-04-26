@@ -31,15 +31,18 @@ public:
   void initStaticBodies();
   void initGround();
   void initDot();
+  void drawDot(b2Vec2 pos, float radius);
+  void resetDot();
 
   void update();
   void draw();
   void mousePressed() {};
-  void drawDot(b2Vec2 pos, float radius);
-  void resetDot();
 
   void keyPressed(int key);
-  void keyReleased(int key);
+  void pressA();
+  void pressD();
+  void pressW();
+  void pressSpace();
   bool isInAir();
   std::vector<Clickable*> getClickables();
   void clickOn(Clickable* button);

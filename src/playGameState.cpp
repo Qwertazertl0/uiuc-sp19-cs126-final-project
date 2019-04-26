@@ -109,6 +109,12 @@ void PlayGameState::update() {
   }
    
   //process game physics
+  if (ofGetKeyPressed('a')) {
+    pressA();
+  } else if (ofGetKeyPressed('d')) {
+    pressD();
+  }
+
   world->Step(timeStep, velocityIterations, positionIterations);
   trailPos.push_front(dotBody->GetPosition());
   if (trailPos.size() > numFadeCircles)
@@ -184,54 +190,60 @@ void PlayGameState::drawDot(b2Vec2 pos, float radius) {
 }
 
 void PlayGameState::keyPressed(int key) {
-  float vertVel, horVel;
   switch (key) {
-  case 'a':
-    vertVel = dotBody->GetLinearVelocity().y;
-    if (dotBody->GetContactList() &&
-      dotBody->GetContactList()->contact->IsTouching()) {
-      dotBody->SetLinearVelocity(b2Vec2(-maxHorSpeed, vertVel));
-    } else {
-      horVel = dotBody->GetLinearVelocity().x;
-      horVel -= horInc;
-      horVel = std::max(-maxHorSpeed, horVel);
-      dotBody->SetLinearVelocity(b2Vec2(horVel, vertVel));
-    }
-    break;
-  case 'd':
-    vertVel = dotBody->GetLinearVelocity().y;
-    if (dotBody->GetContactList() &&
-      dotBody->GetContactList()->contact->IsTouching()) {
-      dotBody->SetLinearVelocity(b2Vec2(maxHorSpeed, vertVel));
-    } else {
-      horVel = dotBody->GetLinearVelocity().x;
-      horVel +=  horInc;
-      horVel = std::min(maxHorSpeed, horVel);
-      dotBody->SetLinearVelocity(b2Vec2(horVel, vertVel));
-    }
-    break;
   case 'w':
-    if (!isInAir()) {
-      dotBody->SetLinearVelocity(b2Vec2(dotBody->GetLinearVelocity().x, maxVertSpeed));
-    }
+    pressW();
     break;
   case ' ':
-    if (!jumpLimitOn || (isInAir() && !jumped)) {
-      dotBody->SetLinearVelocity(b2Vec2(dotBody->GetLinearVelocity().x, maxVertSpeed));
-      jumped = true;
-    }
+    pressSpace();
     break;
   default:
     break;
   }
 }
 
-void PlayGameState::keyReleased(int key) { //TODO: necessary?
-  switch (key) {
-  case 'w':
-    break;
-  default:
-    break;
+void PlayGameState::pressA() {
+  float vertVel, horVel;
+
+  vertVel = dotBody->GetLinearVelocity().y;
+  if (dotBody->GetContactList() &&
+    dotBody->GetContactList()->contact->IsTouching()) {
+    dotBody->SetLinearVelocity(b2Vec2(-maxHorSpeed, vertVel));
+  }
+  else {
+    horVel = dotBody->GetLinearVelocity().x;
+    horVel -= horInc;
+    horVel = std::max(-maxHorSpeed, horVel);
+    dotBody->SetLinearVelocity(b2Vec2(horVel, vertVel));
+  }
+}
+
+void PlayGameState::pressD() {
+  float vertVel, horVel;
+
+  vertVel = dotBody->GetLinearVelocity().y;
+  if (dotBody->GetContactList() &&
+    dotBody->GetContactList()->contact->IsTouching()) {
+    dotBody->SetLinearVelocity(b2Vec2(maxHorSpeed, vertVel));
+  }
+  else {
+    horVel = dotBody->GetLinearVelocity().x;
+    horVel += horInc;
+    horVel = std::min(maxHorSpeed, horVel);
+    dotBody->SetLinearVelocity(b2Vec2(horVel, vertVel));
+  }
+}
+
+void PlayGameState::pressW() {
+  if (!isInAir()) {
+    dotBody->SetLinearVelocity(b2Vec2(dotBody->GetLinearVelocity().x, maxVertSpeed));
+  }
+}
+
+void PlayGameState::pressSpace() {
+  if (!jumpLimitOn || (isInAir() && !jumped)) {
+    dotBody->SetLinearVelocity(b2Vec2(dotBody->GetLinearVelocity().x, maxVertSpeed));
+    jumped = true;
   }
 }
 
