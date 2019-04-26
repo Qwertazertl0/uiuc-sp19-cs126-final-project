@@ -5,7 +5,7 @@ StaticPolygon::StaticPolygon(std::vector<float> vertices, b2World* world) {
   bodyDef.position.Set(0, 0);
   body = world->CreateBody(&bodyDef);
 
-  b2Vec2* vert = new b2Vec2[vertices.size() / 2];
+  vert = new b2Vec2[vertices.size() / 2];
   float minPos;
   float maxPos;
   for (int i = 0; i < vertices.size(); i += 2) {
@@ -24,8 +24,7 @@ StaticPolygon::StaticPolygon(std::vector<float> vertices, b2World* world) {
   }
   leftmostPointX = minPos;
   rightmostPointX = maxPos;
-  triangleCount = vertices.size() - 2;
-  verts = vert;
+  triangleCount = vertices.size() / 2 - 2;
 
   b2PolygonShape polygon;
   polygon.Set(vert, vertices.size() / 2);
@@ -44,16 +43,16 @@ bool StaticPolygon::isInView(float absCamPos) {
 
 void StaticPolygon::draw(float absCamPos) {
   if (isInView(absCamPos)) {
-    b2Vec2 anchor = verts[0];
+    b2Vec2 anchor = vert[0];
     float v0_x = anchor.x * pixelsPerMeter - absCamPos;
     float v0_y = ofGetWindowHeight() - anchor.y * pixelsPerMeter - groundOffset;
 
     b2Vec2 v1, v2;
     int vertIndex = 1;
     for (int i = 0; i < triangleCount; ++i) {
-      v1.Set(verts[vertIndex].x, verts[vertIndex].y);
+      v1.Set(vert[vertIndex].x, vert[vertIndex].y);
       ++vertIndex;
-      v2.Set(verts[vertIndex].x, verts[vertIndex].y);
+      v2.Set(vert[vertIndex].x, vert[vertIndex].y);
       float v1_x = v1.x * pixelsPerMeter - absCamPos;
       float v2_x = v2.x * pixelsPerMeter - absCamPos;
       float v1_y = ofGetWindowHeight() - v1.y * pixelsPerMeter - groundOffset;

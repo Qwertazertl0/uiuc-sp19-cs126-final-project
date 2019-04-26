@@ -13,6 +13,8 @@ Minimum Viable Product:
 	* Framerate problems and inconsistent crackling in audio?
 	* May need to decouple game physics from update loop (how?)
 	* Slow state creation; need to create once and "store" the state
+	* Polygon draw issues in release
+	* Jump limit state does not save
 
  * Game:
 	* Continue fine tuning physics and feel

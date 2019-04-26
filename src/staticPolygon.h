@@ -6,7 +6,7 @@
 
 class StaticPolygon { //Convex polygons only!
   b2Body* body;
-  b2Vec2* verts;
+  b2Vec2* vert;
   int triangleCount;
   float leftmostPointX;
   float rightmostPointX;
