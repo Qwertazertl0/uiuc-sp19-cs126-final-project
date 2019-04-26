@@ -34,6 +34,7 @@ const float airborneYDiffContactLimit = 0.1f;
 const int numFadeCircles = 15;
 const float dotDrawRadius = dotRadius * pixelsPerMeter;
 const float fadeRadiusShrinkage = 20.0f;
+const b2Vec2 dotInitPos = b2Vec2(9.375f, 19.75f);
 
 //Static body constants
 const int groundOffset = 20;
@@ -45,6 +46,8 @@ const float bodyCenterY[] = {2, 14, 8, 7, 23, 2, 1, 12, 6, 24, 10, 1};
 const int numGroundPieces = 4;
 const float worldEnd = 288;
 const float groundBounds[] = {0, 44, 77.25, 78.75, 85.25, 180, 214, worldEnd};
+const std::vector<float> hillVertices = {118, 0, 148, 0, 133, 10};
+const std::vector<float> endPlat = {250, 0, worldEnd, 0, worldEnd, 6, 270, 6};
 
 //Camera constants
 const float bgRelSpeed = 0.75;

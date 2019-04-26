@@ -16,14 +16,13 @@ Minimum Viable Product:
 
  * Game:
 	* Continue fine tuning physics and feel
-	* Create a basic demo level
-	* Round off platforms?
+	* Round off platforms? Texture?
 	* Add slow particle drift to background
 
 ## Already Implemented
  * Dot game physics mostly implemented
 	* Camera scrolling implemented (background at half-pace)
-	* Platforms mostly added (a few more needed)
+	* Platforms added
  * Start menu complete for minimum viable product:
 	* About page finished
 	* Options: Volume control and double jump limit toggle
@@ -42,6 +41,7 @@ Minimum Viable Product:
 	* Having just one platform already makes the init kind of slow; init in ofApp::setup()?
 	* Added return to start menu button
 	* Dot resets upon falling irrecoverably into gap
+	* All platforms added
 
  * __Start Menu__
 	* Added about text

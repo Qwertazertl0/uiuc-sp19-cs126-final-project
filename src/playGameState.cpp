@@ -34,6 +34,11 @@ void PlayGameState::initStaticBodies() {
     demoLevel.platforms.push_back(p);
   }
 
+  StaticPolygon hill(hillVertices, world);
+  StaticPolygon endPlatform(endPlat, world);
+  demoLevel.hills.push_back(hill);
+  demoLevel.hills.push_back(endPlatform);
+
   //non-ground bounding edges
   b2Body* worldEdge;
   worldEdge = world->CreateBody(&bodyDef);
@@ -77,7 +82,7 @@ void PlayGameState::initDot() {
 
   bodyDef.type = b2_dynamicBody;
   bodyDef.fixedRotation = true;
-  bodyDef.position.Set(9.375f, 19.75f); //TODO: pull to constants
+  bodyDef.position.Set(dotInitPos.x, dotInitPos.y);
   dotBody = world->CreateBody(&bodyDef);
   b2CircleShape dotShape;
   b2Vec2 dotPos(0.0f, 0.0f);
@@ -98,15 +103,18 @@ void PlayGameState::resetDot() {
 }
 
 void PlayGameState::update() {
+  //reset if necessary
   if (dotBody->GetPosition().y < dotResetHeight) {
     resetDot();
   }
-
+   
+  //process game physics
   world->Step(timeStep, velocityIterations, positionIterations);
   trailPos.push_front(dotBody->GetPosition());
   if (trailPos.size() > numFadeCircles)
     trailPos.pop_back();
 
+  //damping and jump logic
   if (!ofGetKeyPressed()) {
     float dampedHorVel;
     if (isInAir()) {
@@ -135,6 +143,7 @@ void PlayGameState::update() {
 }
 
 void PlayGameState::draw() {
+  //draw ground and backgrounds
   ofPushStyle();
     ofSetColor(ofColor::black);
     ofDrawRectangle(0, 0, ofGetWindowWidth(), ofGetWindowHeight());
@@ -149,9 +158,10 @@ void PlayGameState::draw() {
   background->draw(0 - relCameraPos, 0, ofGetWindowWidth(), ofGetWindowHeight() - groundOffset);
   wrapBackground->draw(ofGetWindowWidth() - relCameraPos, 0, ofGetWindowWidth(),
                        ofGetWindowHeight() - groundOffset);
-
+  //draw platforms
   demoLevel.draw(absCameraPos);
 
+  //draw dot and trails
   ofEnableAlphaBlending();
   int alpha = 255;
   int counter = 0;
