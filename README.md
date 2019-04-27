@@ -1,1 +1,1 @@
-# Final Project
+# DOT: A Visual Experience
