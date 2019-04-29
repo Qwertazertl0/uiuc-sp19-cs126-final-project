@@ -18,8 +18,6 @@ Minimum Viable Product:
  * Game:
 	* Add slow particle drift to background (Reach goal)
 	* Add more small sounds
-	* Add instructions
-	* Volume state visual should be saved between states
 
 ## Implemented
  * Dot game physics at acceptable levels
@@ -34,7 +32,8 @@ Minimum Viable Product:
 
 ### April 29th - May 1st:
  * __Finishing touches__
-	* 
+	* Added fading controls to the game screen
+	* Volume bar position renders correctly when returning to home screen
 
 ### April 21th - April 28th:
  * __Dot Physics__

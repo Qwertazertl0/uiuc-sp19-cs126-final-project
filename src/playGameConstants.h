@@ -6,6 +6,7 @@ const float pixelsPerMeter = 40.0f; //Changing this may require changes to some 
 const std::string playGameBgPath = "graphics/gameBackground3.jpg";
 const std::string homeNeutralPath = "graphics/homeNeutral.png";
 const std::string homeHoverPath = "graphics/homeHover.png";
+const std::string instructionsPath = "graphics/instructions.png";
 const int homeButtonSideLength = 60;
 const int cornerOffset = 15;
 const ofColor themePurple = ofColor(252, 35, 255);

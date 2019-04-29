@@ -7,6 +7,11 @@
 #include "startMenuState.h"
 
 class PlayGameState : public AppState {
+  int instructionLifeLimit = 100; //number of update cycles instructions will last
+  int instructionLifeCounter = 0;
+  int fadeDec = 5;
+  ofImage* instructions;
+
   ofImage* background;
   ofImage* wrapBackground; //drawn next to background offsreen to simulate wrap
   Clickable* homeButton;

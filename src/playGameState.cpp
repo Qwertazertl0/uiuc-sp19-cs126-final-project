@@ -4,10 +4,9 @@
 #include <algorithm>
 
 PlayGameState::PlayGameState(bool jumpLimit, int sliderX) {
-  background = new ofImage();
-  background->load(playGameBgPath);
-  wrapBackground = new ofImage();
-  wrapBackground->load(playGameBgPath);
+  background = new ofImage(playGameBgPath);
+  wrapBackground = new ofImage(playGameBgPath);
+  instructions = new ofImage(instructionsPath);
   
   ofImage* neutralPath = new ofImage(homeNeutralPath);
   ofImage* hoverPath = new ofImage(homeHoverPath);
@@ -185,6 +184,17 @@ void PlayGameState::draw() {
   drawDot(dotBody->GetPosition(), dotDrawRadius);
 
   homeButton->draw();
+
+  //draw instructions
+  if (instructionLifeCounter < instructionLifeLimit) {
+    ofPushStyle();
+      int alpha = glm::min(255, fadeDec * (instructionLifeLimit - instructionLifeCounter));
+      ofSetColor(themePurple, alpha);
+      ofSetRectMode(OF_RECTMODE_CENTER);
+      instructions->draw(ofGetWindowWidth() / 2, ofGetWindowHeight() / 2);
+    ofPopStyle();
+    ++instructionLifeCounter;
+  }
   ofDisableAlphaBlending();
 }
 
@@ -279,6 +289,7 @@ PlayGameState::~PlayGameState() {
   delete world;
   delete background;
   delete wrapBackground;
+  delete instructions;
   delete homeButton;
   dotBody = NULL;
 } 
