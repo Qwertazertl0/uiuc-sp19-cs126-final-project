@@ -2,8 +2,10 @@
 #include "playGameState.h"
 #include "ofApp.h"
 
-StartMenuState::StartMenuState(bool jumpLimit) : StartMenuState() {
+StartMenuState::StartMenuState(bool jumpLimit, int sliderXPos) : StartMenuState() {
   jumpLimitOn = jumpLimit;
+  sliderX = sliderXPos;
+  slider->getPosition()->setX(sliderX);
 }
 
 StartMenuState::StartMenuState() {
@@ -157,7 +159,7 @@ void StartMenuState::clickOn(Clickable* button) {
   switch (drawItems) {
     case MENU:
       if (button == startButton) {
-        nextState = new PlayGameState(jumpLimitOn);
+        nextState = new PlayGameState(jumpLimitOn, sliderX);
       } else if (button == optionsButton) {
         drawItems = OPTIONS;
       } else if (button == aboutButton) {

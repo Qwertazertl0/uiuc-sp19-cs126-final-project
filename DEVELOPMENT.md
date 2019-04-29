@@ -13,13 +13,15 @@ Minimum Viable Product:
 	* Framerate problems and inconsistent crackling in audio?
 		* Current workaround: set framerate low to 30 fps
 	* Slow state creation; need to create once and "store" the state
-		* Current state: It's not really *that* slow, but it would be better to not make a new state every time
+		* Note: It's not really *that* slow, but it would be better to not make a new state every time
 
  * Game:
-	* Add slow particle drift to background
+	* Add slow particle drift to background (Reach goal)
 	* Add more small sounds
+	* Add instructions
+	* Volume state visual should be saved between states
 
-## Already Implemented
+## Implemented
  * Dot game physics at acceptable levels
 	* Camera scrolling implemented (background at half-pace)
 	* Platforms added, dot reset and jumping finalized
@@ -29,6 +31,10 @@ Minimum Viable Product:
 	* Start and quit functionality
 
 ## Weekly Logs
+
+### April 29th - May 1st:
+ * __Finishing touches__
+	* 
 
 ### April 21th - April 28th:
  * __Dot Physics__

@@ -3,7 +3,7 @@
 #include "Box2D\Box2D.h"
 #include <algorithm>
 
-PlayGameState::PlayGameState(bool jumpLimit) {
+PlayGameState::PlayGameState(bool jumpLimit, int sliderX) {
   background = new ofImage();
   background->load(playGameBgPath);
   wrapBackground = new ofImage();
@@ -16,13 +16,19 @@ PlayGameState::PlayGameState(bool jumpLimit) {
   homeButton = new Clickable(neutralPath, hoverPath, loc);
 
   jumpLimitOn = jumpLimit;
+  sliderXPos = sliderX;
   initBox2DWorld();
+  initGameParticles();
 }
 
 void PlayGameState::initBox2DWorld() {
   world = new b2World(gravity);
   initStaticBodies();
   initDot();
+}
+
+void PlayGameState::initGameParticles() {
+  //Future extension of particle system, if desired
 }
 
 void PlayGameState::initStaticBodies() {
@@ -68,7 +74,7 @@ void PlayGameState::initGround() {
     bodyDef.position.Set((groundBounds[i] + groundBounds[i + 1]) / 2, -1.0f);
     groundBody = world->CreateBody(&bodyDef);
     b2PolygonShape groundBox;
-    float* width = new float; //TODO: check memory leak?
+    float* width = new float;
     *width = groundBounds[i + 1] - groundBounds[i];
     groundBox.SetAsBox(*width / 2, 1.0f);
     groundBody->CreateFixture(&groundBox, 0.0f);
@@ -265,7 +271,7 @@ std::vector<Clickable*> PlayGameState::getClickables() {
 
 void PlayGameState::clickOn(Clickable* button) {
   if (button == homeButton) {
-    nextState = new StartMenuState(jumpLimitOn);
+    nextState = new StartMenuState(jumpLimitOn, sliderXPos);
   }
 }
 

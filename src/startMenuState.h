@@ -37,7 +37,7 @@ class StartMenuState : public AppState {
     bool isMouseOnButton();
   public:
     StartMenuState(); //Load and instantiate all graphics and Clickables
-    StartMenuState(bool jumpLimitOn);
+    StartMenuState(bool jumpLimitOn, int sliderXPos = sliderDefaultX);
     ~StartMenuState();
     void update();
     void draw();

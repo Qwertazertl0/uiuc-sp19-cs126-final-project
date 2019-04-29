@@ -17,6 +17,7 @@ class PlayGameState : public AppState {
   Level demoLevel;
   bool jumpLimitOn;
   bool jumped;
+  int sliderXPos;
 
   std::list<b2Vec2> trailPos;
   b2Vec2 prevDotPos;
@@ -25,9 +26,10 @@ class PlayGameState : public AppState {
   short absCameraPos = 0;
   short absCameraMax = ofGetWindowWidth() * (numScreenWidths - 1);
 public:
-  PlayGameState(bool jumpLimit);
+  PlayGameState(bool jumpLimit, int sliderX);
   ~PlayGameState();
   void initBox2DWorld();
+  void initGameParticles();
   void initStaticBodies();
   void initGround();
   void initDot();
