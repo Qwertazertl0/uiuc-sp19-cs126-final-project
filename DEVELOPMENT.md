@@ -1,32 +1,33 @@
-# Development Log (4/7/19 -- Present)
+# Development Log (4/7/19 -- 5/1/19)
 
 This log maintains a list of current and achieved objectives throughout the development of the project "DOT".
 
 Minimum Viable Product:
  * A smooth little platformer with music, graphically pleasing, and with one demo scroller level.
 
-## Current Objectives
+## Reach objectives and ideas for future development
  * Start Menu:
-	* Smooth transitions (Reach goal)
+	* Smooth transitions
 
- * Issues and improvements: (Reach goal)
+ * Issues and improvements:
 	* Framerate problems and inconsistent crackling in audio?
 		* Current workaround: set framerate low to 30 fps
 	* Slow state creation; need to create once and "store" the state
 		* Note: It's not really *that* slow, but it would be better to not make a new state every time
 
  * Game:
-	* Add slow particle drift to background (Reach goal)
-	* Add more small sounds
+	* Add slow particle drift to background
 
 ## Implemented
  * Dot game physics at acceptable levels
 	* Camera scrolling implemented (background at half-pace)
 	* Platforms added, dot reset and jumping finalized
+	* Home button and fading controls message added
  * Start menu complete for minimum viable product:
 	* About page finished
-	* Options: Volume control and double jump limit toggle
+	* Options: Volume control slider and double jump limit toggle
 	* Start and quit functionality
+ * Audio engine and particle system up and running
 
 ## Weekly Logs
 
@@ -34,6 +35,8 @@ Minimum Viable Product:
  * __Finishing touches__
 	* Added fading controls to the game screen
 	* Volume bar position renders correctly when returning to home screen
+	* Added extra function in audio engine to play extra sounds if needed
+	* Resolved unexpected numerical errors crashing application when minimized
 
 ### April 21th - April 28th:
  * __Dot Physics__

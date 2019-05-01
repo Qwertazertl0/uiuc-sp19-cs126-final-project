@@ -11,6 +11,7 @@ const int homeButtonSideLength = 60;
 const int cornerOffset = 15;
 const ofColor themePurple = ofColor(252, 35, 255);
 const int dotResetHeight = -15;
+const int circleResolution = 100;
 
 //Box2D world physics solver parameters
 const float timeStep = 1.0f / 30.0f;
@@ -26,9 +27,9 @@ const float dotHorVelDampFactor = 0.45f;
 const float inAirHorVelDampFactor = 0.96f;
 
 //Dot dynamics constants
-const float maxHorSpeed = 20;
-const float horInc = 6.0f;
-const float maxVertSpeed = 30;
+const float maxHorSpeed = 17;
+const float horInc = 4.0f;
+const float maxVertSpeed = 26;
 const float airborneYDiffContactLimit = 0.1f;
 
 //Dot graphics constants

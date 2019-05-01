@@ -4,7 +4,7 @@
 
 const int updatesPerCycle = 150; //controls opacity periodicity
 const float opacityVariance = 0.20f;
-const float defaultOpacity = 0.6f;
+const float defaultOpacity = 0.5f;
 const int offsetBound = 100; //offset for velocity variance
                             //  e.g. an offsetBound of 20 is targetVel +/- 10%
 

@@ -201,7 +201,7 @@ void PlayGameState::draw() {
 void PlayGameState::drawDot(b2Vec2 pos, float radius) {
   pos.x = pixelsPerMeter * pos.x - absCameraPos;
   pos.y = ofGetWindowHeight() - pixelsPerMeter * pos.y - groundOffset;
-  ofSetCircleResolution(100);
+  ofSetCircleResolution(circleResolution);
   ofDrawCircle(pos.x, pos.y, radius);
 }
 
@@ -253,6 +253,7 @@ void PlayGameState::pressD() {
 void PlayGameState::pressW() {
   if (!isInAir()) {
     dotBody->SetLinearVelocity(b2Vec2(dotBody->GetLinearVelocity().x, maxVertSpeed));
+    ofApp::audioEng->playJump('w');
   }
 }
 
@@ -260,6 +261,7 @@ void PlayGameState::pressSpace() {
   if (!jumpLimitOn || (isInAir() && !jumped)) {
     dotBody->SetLinearVelocity(b2Vec2(dotBody->GetLinearVelocity().x, maxVertSpeed));
     jumped = true;
+    ofApp::audioEng->playJump(' ');
   }
 }
 

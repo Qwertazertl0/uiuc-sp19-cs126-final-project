@@ -42,7 +42,7 @@ void ParticleSystem::updateParticles() {
     iter->xCoord += iter->velocity.x;
     iter->yCoord += iter->velocity.y;
     float sinScaleFactor = std::sin(iter->life * M_TWO_PI / updatesPerCycle);
-    iter->opacity = 0.5f + opacityVariance * sinScaleFactor;
+    iter->opacity = defaultOpacity + opacityVariance * sinScaleFactor;
     if (iter->xCoord < -1 * particleImage->getWidth() 
         || iter->yCoord < -1 * particleImage->getHeight()) {
       iter = particles.erase(iter);
@@ -53,7 +53,7 @@ void ParticleSystem::updateParticles() {
 
   while (particles.size() < targetParticleNum) {
     //Increase probability that particle is generated on the vertical edge
-    int randCoord = rand() % (ofGetWindowWidth() + 3 * ofGetWindowHeight());
+    int randCoord = rand() % glm::max(1, (ofGetWindowWidth() + 3 * ofGetWindowHeight()));
     int xCoord = randCoord;
     int yCoord = ofGetWindowHeight();
     if (randCoord > ofGetWindowWidth()) {
@@ -84,6 +84,7 @@ void ParticleSystem::clear() {
 }
 
 float ParticleSystem::getOffsetFactor() {
+  //Gives a factor of 1 +- some percent offset (e.g. 0.8 to 1.2)
   return 1.0f + ((rand() % offsetBound) - offsetBound / 2) / 100.0f;
 }
 
